@@ -4,7 +4,11 @@ import Drawer from 'material-ui/Drawer'
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import MenuItem from 'material-ui/MenuItem';
-import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
+import Explore from 'material-ui/svg-icons/action/explore';
+import Layers from 'material-ui/svg-icons/maps/layers';
+import Notifications from 'material-ui/svg-icons/social/notifications';
+import Book from 'material-ui/svg-icons/action/book';
+import Visibility from 'material-ui/svg-icons/action/visibility';
 
 class NavBar extends Component {
 
@@ -14,9 +18,11 @@ class NavBar extends Component {
   }
   render() {
 
-    //if (this.state.drawerOpen) {
-    //  content
-    //}
+    const contentStyle = { transition : 'margin-left 450ms cubic-bezier(0.23, 1, 0.32, 1)'};
+    const forceNavDown = {'top': '64px'}
+    if (this.state.drawerOpen) {
+      contentStyle.marginLeft = 90;
+    }
     return(
       <div>
         <AppBar
@@ -24,25 +30,29 @@ class NavBar extends Component {
           iconElementLeft = { <IconButton onClick={ this.onMenuButtonClick } > <Menu/> </IconButton> }
         />
 
-        <Drawer open= {this.state.drawerOpen}>
-          <IconButton onClick={this.onCloseButtonClick}>
-            <ChevronLeft/>
-          </IconButton>
+        <Drawer open= {this.state.drawerOpen} containerStyle = {forceNavDown} width = {75} >
 
-          <MenuItem> MenuItem 1 </MenuItem>
-          <MenuItem> MenuItem 2 </MenuItem>
+          <MenuItem> <IconButton> <Explore /> </IconButton> </MenuItem>
+          <MenuItem> <IconButton> <Layers /> </IconButton> </MenuItem>
+          <MenuItem> <IconButton> <Notifications /> </IconButton> </MenuItem>
+          <MenuItem> <IconButton> <Visibility /> </IconButton> </MenuItem>
+          <MenuItem> <IconButton> <Book /> </IconButton> </MenuItem>
 
         </Drawer>
-        
+
+        <div style = {contentStyle} >
+
+          fjfslksdjfklsj
+
+        </div>
       </div>
     );
   }
 
 
   //this event handler is triggered when the menu button is clicked
-  onMenuButtonClick = () => this.setState({drawerOpen: true})
+  onMenuButtonClick = () => this.setState({drawerOpen: !this.state.drawerOpen})
 
-  onCloseButtonClick = () => this.setState({drawerOpen: false})
 
 
 
