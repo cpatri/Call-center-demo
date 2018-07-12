@@ -1,9 +1,9 @@
-//import React, { Component } from 'react';
-//import PropTypes from 'prop-types';
-//import { connect } from 'react-redux';
-//import { sayHello } from '../../actions';
+// import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+// import { sayHello } from '../../actions';
 
-//class Home extends Component {
+// class Home extends Component {
 
 //  static propTypes = {
 //    sayHello: PropTypes.func.isRequired,
@@ -21,8 +21,8 @@
 //      </div>
 //    );
 //  }
-//}
+// }
 
-//const mapStateToProps = ({ home }) => ({ home });
+// const mapStateToProps = ({ home }) => ({ home });
 
-//export default connect(mapStateToProps, { sayHello })(Home);
+// export default connect(mapStateToProps, { sayHello })(Home);

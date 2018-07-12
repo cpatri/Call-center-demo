@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
-//import { Route } from 'react-router-dom';
-//import {AppBar} from 'material-ui'
-//import Home from './home';
+
+// import { Route } from 'react-router-dom';
+// import {AppBar} from 'material-ui'
+// import Home from './home';
 
 import NavBar from '../components/nav_bar';
 
@@ -14,8 +14,7 @@ class App extends Component {
         <NavBar />
       </div>
     );
-
   }
-};
+}
 
 export default App;
