@@ -6,3 +6,11 @@ export const sayHello = message => (dispatch) => {
     payload: message,
   });
 };
+
+
+export const lfkjsdlkjs = message => (dispatch) => {
+  dispatch({
+    type: SAY_HELLO,
+    payload: message,
+  });
+};

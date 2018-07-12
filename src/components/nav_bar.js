@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import AppBar from 'material-ui/AppBar'
-import Drawer from 'material-ui/Drawer'
+import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import MenuItem from 'material-ui/MenuItem';
@@ -16,23 +16,30 @@ class NavBar extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {drawerOpen: false};
+    this.state = { drawerOpen: false };
   }
-  render() {
 
-    const contentStyle = { transition : 'margin-left 450ms cubic-bezier(0.23, 1, 0.32, 1)'};
-    const forceNavDown = {'top': '64px'}
+  // this event handler is triggered when the menu button is clicked
+  onMenuButtonClick = () => this.setState({ drawerOpen: !this.state.drawerOpen })
+
+  render() {
+    const contentStyle = { transition: 'margin-left 450ms cubic-bezier(0.23, 1, 0.32, 1)' };
+    const forceNavDown = { top: '64px' };
     if (this.state.drawerOpen) {
       contentStyle.marginLeft = 75;
     }
-    return(
+    return (
       <div>
         <AppBar
           title="Impekable"
-          iconElementLeft = { <IconButton onClick={ this.onMenuButtonClick } > <Menu/> </IconButton> }
+          iconElementLeft={
+            <IconButton onClick={this.onMenuButtonClick} >
+              <Menu />
+            </IconButton>
+          }
         />
 
-        <Drawer open= {this.state.drawerOpen} containerStyle = {forceNavDown} width = {75} >
+        <Drawer open={this.state.drawerOpen} containerStyle={forceNavDown} width={75} >
 
           <MenuItem> <IconButton> <Explore /> </IconButton> </MenuItem>
           <MenuItem> <IconButton> <Layers /> </IconButton> </MenuItem>
@@ -42,7 +49,7 @@ class NavBar extends Component {
 
         </Drawer>
 
-        <div style = {contentStyle} >
+        <div style={contentStyle} >
 
           <Layout />
 
@@ -50,13 +57,6 @@ class NavBar extends Component {
       </div>
     );
   }
-
-
-  //this event handler is triggered when the menu button is clicked
-  onMenuButtonClick = () => this.setState({drawerOpen: !this.state.drawerOpen})
-
-
-
 
 }
 

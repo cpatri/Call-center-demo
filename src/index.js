@@ -20,8 +20,8 @@ const createStoreWithMiddleWare = applyMiddleware(ReduxThunk)(createStore);
 const store = createStoreWithMiddleWare(reducers);
 
 // Override font of material ui to Open Sans
-const fontFamily = "'Open Sans', sans-serif";
-//const muiTheme = getMuiTheme({ fontFamily });
+// const fontFamily = "'Open Sans', sans-serif";
+// const muiTheme = getMuiTheme({ fontFamily });
 const muiTheme = getMuiTheme(darkBaseTheme);
 
 // Router
