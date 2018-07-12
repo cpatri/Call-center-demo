@@ -3,7 +3,7 @@
 //import { connect } from 'react-redux';
 //import { sayHello } from '../../actions';
 
-//class Home extends Component {
+// class Home extends Component {
 
 //  static propTypes = {
 //    sayHello: PropTypes.func.isRequired,
@@ -21,7 +21,7 @@
 //      </div>
 //    );
 //  }
-//}
+// }
 
 //const mapStateToProps = ({ home }) => ({ home });
 

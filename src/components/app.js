@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 //import { Route } from 'react-router-dom';
 //import {AppBar} from 'material-ui'
@@ -14,8 +13,7 @@ class App extends Component {
         <NavBar />
       </div>
     );
-
   }
-};
+}
 
 export default App;
