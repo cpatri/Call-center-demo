@@ -10,6 +10,8 @@ import Notifications from 'material-ui/svg-icons/social/notifications';
 import Book from 'material-ui/svg-icons/action/book';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 
+import Layout from './layout';
+
 class NavBar extends Component {
 
   constructor(props) {
@@ -21,7 +23,7 @@ class NavBar extends Component {
     const contentStyle = { transition : 'margin-left 450ms cubic-bezier(0.23, 1, 0.32, 1)'};
     const forceNavDown = {'top': '64px'}
     if (this.state.drawerOpen) {
-      contentStyle.marginLeft = 90;
+      contentStyle.marginLeft = 75;
     }
     return(
       <div>
@@ -42,7 +44,7 @@ class NavBar extends Component {
 
         <div style = {contentStyle} >
 
-          fjfslksdjfklsj
+          <Layout />
 
         </div>
       </div>
