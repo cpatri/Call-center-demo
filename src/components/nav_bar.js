@@ -9,10 +9,11 @@ import Layers from 'material-ui/svg-icons/maps/layers';
 import Notifications from 'material-ui/svg-icons/social/notifications';
 import Book from 'material-ui/svg-icons/action/book';
 import Visibility from 'material-ui/svg-icons/action/visibility';
-
 import Layout from './layout';
 
+
 class NavBar extends Component {
+
 
   constructor(props) {
     super(props);
@@ -39,8 +40,12 @@ class NavBar extends Component {
           }
         />
 
-        <Drawer open={this.state.drawerOpen} containerStyle={forceNavDown} width={75} >
-
+        <Drawer
+          open={this.state.drawerOpen}
+          transitionDuration={450}
+          containerStyle={forceNavDown}
+          width={75}
+        >
           <MenuItem> <IconButton> <Explore /> </IconButton> </MenuItem>
           <MenuItem> <IconButton> <Layers /> </IconButton> </MenuItem>
           <MenuItem> <IconButton> <Notifications /> </IconButton> </MenuItem>
@@ -50,9 +55,7 @@ class NavBar extends Component {
         </Drawer>
 
         <div style={contentStyle} >
-
           <Layout />
-
         </div>
       </div>
     );

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import GoldenLayout from 'golden-layout';
 import ReactDOM from 'react-dom';
-import LeftPageList from './left-page-list';
-import RightPageChat from './right-page-chat';
+import LeftPageList from '../containers/left-page-list';
+import RightPageChat from '../containers/right-page-chat';
+
 
 window.React = React;
 window.ReactDOM = ReactDOM;
@@ -43,11 +44,12 @@ class Layout extends Component {
   }
 
   render() {
+    if (!this.props.users) {
+      return null;
+    }
     return (
       <div style={{ height: 'calc(100vh - 64px)' }} ref={this.setNode} />
     );
   }
+
 }
-
-
-export default Layout;
