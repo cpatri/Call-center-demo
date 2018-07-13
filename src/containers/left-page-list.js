@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { selectUser } from '../actions/index';
+
 
 class LeftPageList extends Component {
   renderList() {
-    return this.props.users.map(users => (
-      <li key={users.username} className="list-group-item"><span> {users.username}</span></li>
-      ));
+    return this.props.users.map(user => (
+      <li
+        key={user.username}
+        onClick={() => this.props.selectUser(user)}
+        className="list-group-item"
+      >
+        <span>
+          {user.username}
+        </span>
+      </li>
+    ));
   }
+
   render() {
     return (
       <ul className="list-group col-sm-4">
@@ -15,13 +27,14 @@ class LeftPageList extends Component {
       </ul>
     );
   }
+
 }
 
 LeftPageList.PropTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
-  })),
+  })).isRequired,
 };
 
 function mapStateToProps(state) {
@@ -29,8 +42,11 @@ function mapStateToProps(state) {
     users: state.users,
   };
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ selectUser }, dispatch);
+}
 
-export default connect(mapStateToProps)(LeftPageList);
+export default connect(mapStateToProps, mapDispatchToProps)(LeftPageList);
 
  /* class LeftPageList extends Component {
   render() {
