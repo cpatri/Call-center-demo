@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import GoldenLayout from 'golden-layout';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import LeftPageListContainer from '../containers/left-page-list';
+import LeftPageList from '../containers/left-page-list';
 import RightPageChat from '../containers/right-page-chat';
 
 window.React = React;
@@ -48,7 +48,7 @@ class GoldenLayoutWrapper extends Component {
     }
 
     const layout = new GoldenLayout(config, this.layout);
-    layout.registerComponent('left-page-list', wrapComponent(LeftPageListContainer, this.context.store));
+    layout.registerComponent('left-page-list', wrapComponent(LeftPageList, this.context.store));
     layout.registerComponent('right-page-chat', wrapComponent(RightPageChat, this.context.store));
     layout.init();
   }
