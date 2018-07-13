@@ -9,7 +9,7 @@ import Layers from 'material-ui/svg-icons/maps/layers';
 import Notifications from 'material-ui/svg-icons/social/notifications';
 import Book from 'material-ui/svg-icons/action/book';
 import Visibility from 'material-ui/svg-icons/action/visibility';
-import Layout from './layout';
+import GoldenLayoutWrapper from './layout';
 
 
 class NavBar extends Component {
@@ -55,7 +55,7 @@ class NavBar extends Component {
         </Drawer>
 
         <div style={contentStyle} >
-          <Layout />
+          <GoldenLayoutWrapper />
         </div>
       </div>
     );

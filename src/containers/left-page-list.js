@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class LeftPageList extends Component {
-
   renderList() {
     return this.props.users.map(users => (
-      <li key={users.username} className="list-group-item"> {users.username} </li>
+      <li key={users.username} className="list-group-item"><span> {users.username}</span></li>
       ));
   }
   render() {
@@ -18,11 +17,11 @@ class LeftPageList extends Component {
   }
 }
 
-LeftPageList.propTypes = {
+LeftPageList.PropTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
-  })).isRequired,
+  })),
 };
 
 function mapStateToProps(state) {
@@ -32,3 +31,11 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(LeftPageList);
+
+ /* class LeftPageList extends Component {
+  render() {
+    return <input />;
+  }
+}
+
+export default LeftPageList; */
