@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import GoldenLayout from 'golden-layout';
 import ReactDOM from 'react-dom';
-import LeftPageList from './left-page-list';
-import RightPageChat from './right-page-chat';
+import { Provider } from 'react-redux';
+import LeftPageList from '../containers/left-page-list';
+import RightPageChat from '../containers/right-page-chat';
 
 window.React = React;
 window.ReactDOM = ReactDOM;
 
-class Layout extends Component {
-  constructor(props) {
-    super(props);
-    this.setNode = this.setNode.bind(this);
-  }
+class GoldenLayoutWrapper extends Component {
+   /* constructor(props) {
+     super(props);
+     this.setNode = this.setNode.bind(this);
+  } */
 
   componentDidMount() {
+    // build basic golden-layout config
     const config = {
       content: [{
         type: 'row',
@@ -32,22 +34,38 @@ class Layout extends Component {
       }],
     };
 
-    const myLayout = new GoldenLayout(config, this.node);
-    myLayout.registerComponent('left-page-list', LeftPageList);
-    myLayout.registerComponent('right-page-chat', RightPageChat);
-    myLayout.init();
+    function wrapComponent(Component, store) {
+      class Wrapped extends React.Component {
+        render() {
+          return (
+            <Provider store={store}>
+              <Component {...this.props} />
+            </Provider>
+          );
+        }
+      }
+      return Wrapped;
+    }
+
+    const layout = new GoldenLayout(config, this.layout);
+    layout.registerComponent('left-page-list', wrapComponent(LeftPageList, this.context.store));
+    layout.registerComponent('right-page-chat', wrapComponent(RightPageChat, this.context.store));
+    layout.init();
   }
 
-  setNode(node) {
-    this.node = node;
-  }
+// setNode(node) {
+//   this.node = node;
+// }
 
   render() {
     return (
-      <div style={{ height: 'calc(100vh - 64px)' }} ref={this.setNode} />
+      <div style={{ height: 'calc(100vh - 64px)' }} ref={input => (this.layout = input)} />
     );
   }
 }
 
+GoldenLayoutWrapper.contextTypes = {
+  store: React.PropTypes.object.isRequired,
+};
 
-export default Layout;
+export default GoldenLayoutWrapper;
