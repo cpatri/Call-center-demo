@@ -12,7 +12,9 @@ class RightPageChat extends Component {
         <span>
           <h3> Messages from {this.props.user.username}: </h3>
           <h4> {this.props.user.message.map(message =>
-            <li> {message} </li>,
+            <div key={message}>
+              <li> {message} </li>
+            </div>,
           )}
           </h4>
         </span>

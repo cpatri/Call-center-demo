@@ -13,3 +13,13 @@ html {
 span {
   color: white;
 }
+.container {
+    max-width: 100vw;
+}
+.username-list li {
+  padding: 10px;
+  border-bottom: 1px solid #555;
+}
+.username-list:hover{
+  background: #666;
+}
