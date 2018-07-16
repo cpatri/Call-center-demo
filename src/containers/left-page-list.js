@@ -10,16 +10,14 @@ class LeftPageList extends Component {
     return this.props.users.map(user => (
       <div
         onClick={() => this.props.selectUser(user)}
-        className="username-list"
+        className="username-list-item"
         key={user.username}
       >
         <li
-          className="list-group-item list-group-item-dark"
+          className="username-item"
           key={user.username}
         >
-          <span>
-            {user.username}
-          </span>
+          {user.username}
         </li>
       </div>
     ));
