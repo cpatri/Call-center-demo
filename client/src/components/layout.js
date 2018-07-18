@@ -2,11 +2,34 @@ import React, { Component } from 'react';
 import GoldenLayout from 'golden-layout';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+
+
+import { createStore, applyMiddleware } from 'redux';
+import reducers from '../reducers';
+
 import LeftPageList from '../containers/left-page-list';
 import RightPageChat from '../containers/right-page-chat';
 
 window.React = React;
 window.ReactDOM = ReactDOM;
+
+const createStoreWithMiddleWare = applyMiddleware(ReduxThunk)(createStore);
+
+const store = createStoreWithMiddleWare(reducers);
+
+function wrapComponent(Component, store) {
+  class Wrapped extends React.Component {
+    render() {
+      return (
+        <Provider store={store}>
+          <Component {...this.props} />
+        </Provider>
+      );
+    }
+  }
+  return Wrapped;
+}
 
 class GoldenLayoutWrapper extends Component {
    /* constructor(props) {
@@ -34,22 +57,9 @@ class GoldenLayoutWrapper extends Component {
       }],
     };
 
-    function wrapComponent(Component, store) {
-      class Wrapped extends React.Component {
-        render() {
-          return (
-            <Provider store={store}>
-              <Component {...this.props} />
-            </Provider>
-          );
-        }
-      }
-      return Wrapped;
-    }
-
     const layout = new GoldenLayout(config, this.layout);
-    layout.registerComponent('left-page-list', wrapComponent(LeftPageList, this.context.store));
-    layout.registerComponent('right-page-chat', wrapComponent(RightPageChat, this.context.store));
+    layout.registerComponent('left-page-list', wrapComponent(LeftPageList, store));
+    layout.registerComponent('right-page-chat', wrapComponent(RightPageChat, store));
     layout.init();
   }
 
@@ -64,8 +74,8 @@ class GoldenLayoutWrapper extends Component {
   }
 }
 
-GoldenLayoutWrapper.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-};
+// GoldenLayoutWrapper.contextTypes = {
+//   store: React.PropTypes.object.isRequired,
+// };
 
 export default GoldenLayoutWrapper;

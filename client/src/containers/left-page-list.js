@@ -8,21 +8,24 @@ import { selectUser } from '../actions/index';
 class LeftPageList extends Component {
   renderList() {
     return this.props.users.map(user => (
-      <li
-        key={user.username}
+      <div
         onClick={() => this.props.selectUser(user)}
-        className="list-group-item"
+        className="username-list-item"
+        key={user.username}
       >
-        <span>
+        <li
+          className="username-item"
+          key={user.username}
+        >
           {user.username}
-        </span>
-      </li>
+        </li>
+      </div>
     ));
   }
 
   render() {
     return (
-      <ul className="list-group col-sm-4">
+      <ul className="list-group">
         {this.renderList()}
       </ul>
     );
