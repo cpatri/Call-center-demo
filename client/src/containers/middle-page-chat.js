@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class RightPageChat extends Component {
+class MiddlePageChat extends Component {
   render() {
     if (!this.props.user) {
       return <div className="messages"> Pick a user to see their messages. </div>;
@@ -30,4 +30,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(RightPageChat);
+export default connect(mapStateToProps)(MiddlePageChat);

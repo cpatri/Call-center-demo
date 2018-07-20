@@ -9,7 +9,8 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from '../reducers';
 
 import LeftPageList from '../containers/left-page-list';
-import RightPageChat from '../containers/right-page-chat';
+import MiddlePageChat from '../containers/middle-page-chat';
+import RightPageInfo from '../containers/right-page-info';
 
 window.React = React;
 window.ReactDOM = ReactDOM;
@@ -49,9 +50,14 @@ class GoldenLayoutWrapper extends Component {
             component: 'left-page-list',
           },
           {
-            title: 'Right Page',
+            title: 'Middle Page',
             type: 'react-component',
-            component: 'right-page-chat',
+            component: 'middle-page-chat',
+          },
+          {
+            title: 'Right page',
+            type: 'react-component',
+            component: 'right-page-info',
           },
         ],
       }],
@@ -59,7 +65,9 @@ class GoldenLayoutWrapper extends Component {
 
     const layout = new GoldenLayout(config, this.layout);
     layout.registerComponent('left-page-list', wrapComponent(LeftPageList, store));
-    layout.registerComponent('right-page-chat', wrapComponent(RightPageChat, store));
+    layout.registerComponent('middle-page-chat', wrapComponent(MiddlePageChat, store));
+    layout.registerComponent('right-page-info', wrapComponent(RightPageInfo, store));
+
     layout.init();
   }
 
