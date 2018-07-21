@@ -2,57 +2,41 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import Menu from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
-import MenuItem from 'material-ui/MenuItem';
+import Avatar from 'material-ui/Avatar';
+import { List, ListItem } from 'material-ui/List';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { selectUser } from '../actions/index';
 
-const muiTheme = getMuiTheme(darkBaseTheme);
+const muiTheme = getMuiTheme();
 
-/*class LeftPageList extends Component {
-  renderList() {
-    return this.props.users.map(user => (
-      <div
-        onClick={() => this.props.selectUser(user)}
-        className="username-list-item"
-        key={user.username}
-      >
-        <li
-          className="username-item"
-          key={user.username}
-        >
-          {user.username}
-        </li>
-      </div>
-    ));
-  }
-
-  render() {
-    return (
-      <ul className="list-group">
-        {this.renderList()}
-      </ul>
-    );
-  }
-
-}*/
 class LeftPageList extends Component {
   renderList() {
     return this.props.users.map(user => (
-      <MenuItem key={user.username} primaryText={user.username} onClick={() => this.props.selectUser(user)} />
+      <ListItem
+        leftAvatar={
+          <Avatar
+            src={user.image}
+            size={30}
+          />
+        }
+        key={user.username}
+        primaryText={user.username}
+        secondaryText={user.message[0]}
+        secondaryTextLines={2}
+        onClick={() => this.props.selectUser(user)}
+      />
     ));
   }
-
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Paper>
-          <Menu>
+          <List>
             {this.renderList()}
-          </Menu>
+          </List>
         </Paper>
       </MuiThemeProvider>
     );

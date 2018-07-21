@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RightPageInfo = () => {
-  return <input />;
+  return <input/>;
 };
 
 export default RightPageInfo;
