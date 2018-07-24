@@ -10,24 +10,27 @@ const muiTheme = getMuiTheme();
 
 class MiddlePageChat extends Component {
   componentWillMount() {
-    // this.props.selectUser({});
-    // console.log(this.props);
+    console.log('this.props from middle page', this.props);
+    this.props.selectUser(this.props.users[0]);
+  }
+  componentDidMount() {
+    // console.log('this.props from middle page', this.props);
   }
 
   render() {
-    if (!this.props.user) {
+    if (!this.props.activeUser) {
       return <div className="messages"> Chatbox empty. Pick a user. </div>;
     }
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="messages">
-          <h3> {this.props.user.username} </h3>
+          <h3> {this.props.activeUser.username} </h3>
           <br />
-          <div> {this.props.user.message.map(message =>
+          <div> {this.props.activeUser.message.map(message =>
             (<div className="complete-message" key={message.text} >
               <div className="avatar-message">
-                <Avatar src={this.props.user.image} size={30} />
+                <Avatar src={this.props.activeUser.image} size={30} />
               </div>
               <div className="message-bubble">
                 {message.text}
@@ -45,12 +48,12 @@ class MiddlePageChat extends Component {
     );
   }
 }
-
-
+// Rule 1: Return an object, and ill put all the properties and methods as props on your components
 function mapStateToProps(state) {
-  return {
-    user: state.activeUser,
-  };
+  return state;
+    //activeUser: state.activeUser,
+    //users: state.users,
 }
 
-export default connect(mapStateToProps)(MiddlePageChat);
+
+export default connect(mapStateToProps, { selectUser })(MiddlePageChat);

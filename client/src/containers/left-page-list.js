@@ -66,6 +66,7 @@ class LeftPageList extends Component {
       />
     ));
   }
+
   componentDidMount() {
     ListItem.defaultProps.disableTouchRipple = true;
     ListItem.defaultProps.disableFocusRipple = true;
