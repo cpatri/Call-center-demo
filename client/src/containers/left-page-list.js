@@ -49,7 +49,7 @@ SelectableList = wrapState(SelectableList);
 
 class LeftPageList extends Component {
   renderList() {
-    return this.props.users.map((user,index) => (
+    return this.props.users.map((user, index) => (
       <ListItem
         value={index}
         leftAvatar={
@@ -60,7 +60,7 @@ class LeftPageList extends Component {
         }
         key={user.username}
         primaryText={user.username}
-        secondaryText={user.message[user.message.length - 1]}
+        secondaryText={user.message[user.message.length-1].text}
         secondaryTextLines={2}
         onClick={() => this.props.selectUser(user)}
       />
@@ -74,7 +74,7 @@ class LeftPageList extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Paper>
-          <SelectableList defaultValue={3}>
+          <SelectableList defaultValue={0}>
             {this.renderList()}
           </SelectableList>
         </Paper>
