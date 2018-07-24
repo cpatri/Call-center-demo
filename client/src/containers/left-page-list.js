@@ -49,9 +49,9 @@ SelectableList = wrapState(SelectableList);
 
 class LeftPageList extends Component {
   renderList() {
-    return this.props.users.map(user => (
+    return this.props.users.map((user,index) => (
       <ListItem
-        value={user.index}
+        value={index}
         leftAvatar={
           <Avatar
             src={user.image}

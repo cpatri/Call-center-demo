@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 import './input-bar-style.css';
+
 
 class InputBar extends Component {
   constructor(props) {
@@ -43,7 +45,16 @@ class InputBar extends Component {
               value={this.state.message}
               onChange={this.onInputChange}
             />
-            <button className="submit-message-btn" type="submit"> Send </button>
+            <RaisedButton
+              label="Send"
+              primary={true}
+              className="send-button"
+              onClick={this.onFormSubmit}
+              style={{
+                position: 'relative',
+                bottom: '15px',
+              }}
+            />
           </form>
         </div>
       </div>
