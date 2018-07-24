@@ -1,0 +1,32 @@
+.chat-input-wrap {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 2.5em;
+  background: #fff;
+  box-shadow: 0px 0px 6px #C7C9CA;
+  padding: 1.5em;
+}
+
+input[type="text"].submit-message-bar {
+    width: 40%;
+    max-width: 34em;
+    border-radius: 3px;
+    border: none;
+    box-shadow: inset 0px 0px 2px #95979b;
+    padding: 0.7em;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    font-weight: 100;
+    border: 1px solid #fff;
+    position: relative;
+    bottom: 15px;
+}
+
+button[type="submit"].submit-message-btn {
+  color: #4A90E2;
+  background: #fff;
+  border: none;
+  position: relative;
+  bottom: 15px;
+}

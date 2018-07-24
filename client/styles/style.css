@@ -11,6 +11,7 @@ html {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+
 .username-list-item li {
   padding: 10px;
   border-bottom: 1px solid #555;
@@ -27,16 +28,21 @@ html {
 }
 .messages {
   color: black;
+  position: relative;
+  height: 100%;
 }
-
+.complete-message{
+  display: flex;
+  padding: 10px;
+}
 .message-bubble {
-  display: inline-block;
+
   background: #fff;
   padding: 0.5em 0.9em 0.5em 0.9em;
   border-radius: 20px;
   font-size: 0.8em;
-  margin-bottom: 0.4em;
-  margin-top: 1.1em;
+  margin-bottom: 1.1em;
+  margin-left: 1.1em;
   line-height: 1.5em;
-  clear:left;
+
 }
