@@ -13,23 +13,28 @@ class MiddlePageChat extends Component {
     this.props.selectUser(this.props.center.users[0]);
   }
 
+// render with avatars and messages on left side
   render() {
-    const { messageBubbleStyle } = styles;
+    const { messageListStyle,
+            leftMessageBubbleStyle,
+            rightMessageBubbleStyle,
+            completeLeftMessageStyle,
+            completeRightMessageStyle } = styles;
     if (!this.props.center.activeUser) {
       return <div />;
     }
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="messages">
+        <div style={messageListStyle}>
           <h3 > {this.props.center.activeUser.username} </h3>
           <br />
           <div> {this.props.center.activeUser.message.map(message =>
-            (<div className="complete-message" key={message.text} >
-              <div className="avatar-message">
+            (<div style={message.id == 0 ? completeLeftMessageStyle : completeRightMessageStyle} key={message.text} >
+              {!message.id && <div className="avatar-message">
                 <Avatar src={this.props.center.activeUser.image} size={30} />
-              </div>
-              <div style={ messageBubbleStyle }>
+              </div>}
+              <div style={message.id == 0 ? leftMessageBubbleStyle: rightMessageBubbleStyle}>
                 {message.text}
                 <br />
               </div>
@@ -45,6 +50,7 @@ class MiddlePageChat extends Component {
     );
   }
 }
+
 // Rule 1: Return an object, and I'll put all the properties and methods as props on your components
 function mapStateToProps(state) {
   return state;
@@ -54,8 +60,32 @@ function mapStateToProps(state) {
 }
 
 const styles = {
-  messageBubbleStyle: {
+  messageListStyle: {
+    color: 'black',
+    position: 'relative',
+    height: '100%',
+  },
+  completeLeftMessageStyle: {
+    display: 'flex',
+    padding: '10px',
+  },
+  completeRightMessageStyle: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    padding: '10px',
+  },
+  leftMessageBubbleStyle: {
     background: '#fff',
+    padding: '0.5em 0.9em 0.5em 0.9em',
+    borderRadius: '20px',
+    fontSize: '0.8em',
+    marginBottom: '1.1em',
+    marginLeft: '1.1em',
+    lineHeight: '1.5em',
+    fontFamily: 'Roboto, sans-serif',
+  },
+  rightMessageBubbleStyle: {
+    background: '#00BCD4',
     padding: '0.5em 0.9em 0.5em 0.9em',
     borderRadius: '20px',
     fontSize: '0.8em',

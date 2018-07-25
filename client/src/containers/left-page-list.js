@@ -53,7 +53,6 @@ class LeftPageList extends Component {
     ListItem.defaultProps.disableFocusRipple = true;
   }
   renderList() {
-    console.log(this.props, 'ERROR');
     return this.props.users.map((user, index) => (
       <ListItem
         value={index}
@@ -92,7 +91,6 @@ LeftPageList.PropTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log("state:", state);
   return {
     users: state.center.users,
   };
