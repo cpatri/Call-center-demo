@@ -46,20 +46,17 @@ const initState = {
 // push into the array of messages, the message from the action
 // and give it an id of 1
 // (chat is each element inside the users array)
-const setUsers = ({ users, activeUser }, message) => {
-  return users.map((chat) => {
-    console.log("chat:", chat);
-    if (activeUser.username === chat.username) {
-      const newMessage = chat.message;
-      newMessage.push({
-        id: 1,
-        text: message,
-      })
-      return { ...chat, message: newMessage };
-    }
-    return chat;
-  });
-}
+const setUsers = ({ users, activeUser }, message) => users.map((chat) => {
+  if (activeUser.username === chat.username) {
+    const newMessage = chat.message;
+    newMessage.push({
+      id: 1,
+      text: message,
+    });
+    return { ...chat, message: newMessage };
+  }
+  return chat;
+});
 
 export default function (state = initState, action) {
   switch (action.type) {
@@ -67,7 +64,7 @@ export default function (state = initState, action) {
       return { ...state, activeUser: action.payload };
     case 'SEND_MESSAGE':
       // when the message is sent, only update the users array
-      return { ...state, users: setUsers(state, action.payload) }
+      return { ...state, users: setUsers(state, action.payload) };
   }
   return state;
 }

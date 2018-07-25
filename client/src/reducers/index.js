@@ -4,9 +4,6 @@ import CenterReducer from './center';
 
 // how the redux state is being updated
 const rootReducer = combineReducers({
-  // users: UsersReducer,
-  // activeUser: ActiveUser,
-  // message: MessageReducer,
   center: CenterReducer,
 });
 
