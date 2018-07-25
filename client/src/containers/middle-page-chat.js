@@ -4,7 +4,7 @@ import Avatar from 'material-ui/Avatar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import InputBar from '../components/input-bar/input-bar';
+import InputBar from '../components/input-bar';
 import { selectUser } from '../actions';
 
 const muiTheme = getMuiTheme();

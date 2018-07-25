@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import './input-bar-style.css';
 
 
 class InputBar extends Component {
@@ -23,8 +22,7 @@ class InputBar extends Component {
     event.preventDefault();
     if (!this.state.message) {
       alert('Enter a message!');
-    }
-    else {
+    } else {
       // create an actionCreator to send the message
       this.props.sendMessage(this.state.message);
       this.setState({
@@ -33,36 +31,8 @@ class InputBar extends Component {
     }
   }
 
-  // render() {
-  //   return (
-  //     <div className="chat-input-wrap">
-  //       <div className="chat-input-container">
-  //         <form onSubmit={this.onFormSubmit}>
-  //           <input
-  //             placeholder="Type a message..."
-  //             className="submit-message-bar"
-  //             type="text"
-  //             value={this.state.message}
-  //             onChange={this.onInputChange}
-  //           />
-  //           <RaisedButton
-  //             label="Send"
-  //             primary
-  //             className="send-button"
-  //             onClick={this.onFormSubmit}
-  //             style={{
-  //               position: 'relative',
-  //               bottom: '15px',
-  //             }}
-  //           />
-  //         </form>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   render() {
-    const { formStyle, inputStyle } = styles;
+    const { formStyle, inputStyle, buttonStyle } = styles;
     return (
       <form style={formStyle} onSubmit={this.onFormSubmit}>
         <input
@@ -78,15 +48,12 @@ class InputBar extends Component {
           primary
           className="send-button"
           onClick={this.onFormSubmit}
-          style={{
-            position: 'relative',
-          }}
+          style={buttonStyle}
         />
       </form>
     );
   }
 }
-
 const styles = {
   formStyle: {
     width: '100%',
@@ -101,8 +68,11 @@ const styles = {
     width: '100%',
     boxShadow: 'inset 0px 0px 2px #95979b',
     fontWeight: 100,
-    fontSize:'15px',
+    fontSize: '15px',
     fontFamily: 'Roboto, sans-serif',
+  },
+  buttonStyle: {
+    position: 'relative',
   },
 };
 
