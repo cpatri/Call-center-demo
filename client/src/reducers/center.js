@@ -18,7 +18,7 @@ const initState = {
       username: 'Hermione Granger',
       message: [{
         id: 0,
-        text: 'Hi Caroline! Are you available to study for the transfiguration test in the library at 6? cljdsfhkjshkdlsjfhzdkljfhzsdkljf hzklsdjhfzskjhsflhs dkjhsdkjhskjfhskfjhskjf sfkjshfkjsh fkjshfkjfhskfjshfkjshksjfhskjh sflskdjdslkfjlksj slfkjflajflkajlk j fkjalfkjaldkjaslkd',
+        text: 'Hi Caroline! Are you available to study for the transfiguration test in the library at 6?',
       }, {
         id: 0,
         text: 'This test is going to be so hard!',
@@ -41,8 +41,14 @@ const initState = {
   message: '',
 };
 
+// when updating the users array, loop through all users
+// when we found the user that's the active user,
+// push into the array of messages, the message from the action
+// and give it an id of 1
+// (chat is each element inside the users array)
 const setUsers = ({ users, activeUser }, message) => {
   return users.map((chat) => {
+    console.log("chat:", chat);
     if (activeUser.username === chat.username) {
       const newMessage = chat.message;
       newMessage.push({
@@ -60,6 +66,7 @@ export default function (state = initState, action) {
     case 'USER_SELECTED':
       return { ...state, activeUser: action.payload };
     case 'SEND_MESSAGE':
+      // when the message is sent, only update the users array
       return { ...state, users: setUsers(state, action.payload) }
   }
   return state;

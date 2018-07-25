@@ -14,7 +14,7 @@ class MiddlePageChat extends Component {
   }
 
   render() {
-    console.log("this.props in middle page chat", this.props);
+    const { messageBubbleStyle } = styles;
     if (!this.props.center.activeUser) {
       return <div />;
     }
@@ -29,7 +29,7 @@ class MiddlePageChat extends Component {
               <div className="avatar-message">
                 <Avatar src={this.props.center.activeUser.image} size={30} />
               </div>
-              <div className="message-bubble" style={{ fontFamily: 'Roboto, sans-serif' }}>
+              <div style={ messageBubbleStyle }>
                 {message.text}
                 <br />
               </div>
@@ -52,5 +52,18 @@ function mapStateToProps(state) {
     // activeUser: state.activeUser,
     // users: state.users,
 }
+
+const styles = {
+  messageBubbleStyle: {
+    background: '#fff',
+    padding: '0.5em 0.9em 0.5em 0.9em',
+    borderRadius: '20px',
+    fontSize: '0.8em',
+    marginBottom: '1.1em',
+    marginLeft: '1.1em',
+    lineHeight: '1.5em',
+    fontFamily: 'Roboto, sans-serif',
+  },
+};
 
 export default connect(mapStateToProps, { selectUser })(MiddlePageChat);
