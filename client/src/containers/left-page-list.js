@@ -48,6 +48,10 @@ function wrapState(ComposedComponent) {
 SelectableList = wrapState(SelectableList);
 
 class LeftPageList extends Component {
+  componentDidMount() {
+    ListItem.defaultProps.disableTouchRipple = true;
+    ListItem.defaultProps.disableFocusRipple = true;
+  }
   renderList() {
     return this.props.users.map((user, index) => (
       <ListItem
@@ -60,16 +64,11 @@ class LeftPageList extends Component {
         }
         key={user.username}
         primaryText={user.username}
-        secondaryText={user.message[user.message.length-1].text}
+        secondaryText={user.message[user.message.length - 1].text}
         secondaryTextLines={2}
         onClick={() => this.props.selectUser(user)}
       />
     ));
-  }
-
-  componentDidMount() {
-    ListItem.defaultProps.disableTouchRipple = true;
-    ListItem.defaultProps.disableFocusRipple = true;
   }
   render() {
     return (
@@ -101,11 +100,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftPageList);
-
- /* class LeftPageList extends Component {
-  render() {
-    return <input />;
-  }
-}
-
-export default LeftPageList; */

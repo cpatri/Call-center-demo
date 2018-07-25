@@ -1,4 +1,4 @@
-.chat-input-wrap {
+/* .chat-input-wrap {
   position: absolute;
   width: 100%;
   bottom: 0;
@@ -9,8 +9,7 @@
 }
 
 input[type="text"].submit-message-bar {
-    width: 100%;
-    max-width: 44em;
+    width: 75%;
     border-radius: 3px;
     border: none;
     box-shadow: inset 0px 0px 2px #95979b;
@@ -29,4 +28,4 @@ button[type="submit"].submit-message-btn {
   border: none;
   position: relative;
   bottom: 15px;
-}
+} */

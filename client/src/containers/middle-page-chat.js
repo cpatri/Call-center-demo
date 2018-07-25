@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import InputBar from '../components/input-bar/input-bar';
 import Avatar from 'material-ui/Avatar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+import InputBar from '../components/input-bar/input-bar';
 import { selectUser } from '../actions';
 
 const muiTheme = getMuiTheme();
 
 class MiddlePageChat extends Component {
   componentWillMount() {
-    console.log('this.props from middle page', this.props);
     this.props.selectUser(this.props.users[0]);
   }
   componentDidMount() {
@@ -19,7 +19,7 @@ class MiddlePageChat extends Component {
 
   render() {
     if (!this.props.activeUser) {
-      return <div className="messages"> Chatbox empty. Pick a user. </div>;
+      return <div />;
     }
 
     return (
@@ -48,12 +48,12 @@ class MiddlePageChat extends Component {
     );
   }
 }
-// Rule 1: Return an object, and ill put all the properties and methods as props on your components
+// Rule 1: Return an object, and I'll put all the properties and methods as props on your components
 function mapStateToProps(state) {
   return state;
-    //activeUser: state.activeUser,
-    //users: state.users,
+    // same as
+    // activeUser: state.activeUser,
+    // users: state.users,
 }
-
 
 export default connect(mapStateToProps, { selectUser })(MiddlePageChat);
