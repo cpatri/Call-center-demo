@@ -13,8 +13,6 @@ import GoldenLayoutWrapper from './layout';
 
 
 class NavBar extends Component {
-
-
   constructor(props) {
     super(props);
     this.state = { drawerOpen: false };

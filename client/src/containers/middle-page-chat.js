@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Avatar from 'material-ui/Avatar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import InputBar from '../components/input-bar';
 import { selectUser } from '../actions';
 
@@ -11,28 +10,26 @@ const muiTheme = getMuiTheme();
 
 class MiddlePageChat extends Component {
   componentWillMount() {
-    this.props.selectUser(this.props.users[0]);
-  }
-  componentDidMount() {
-    // console.log('this.props from middle page', this.props);
+    this.props.selectUser(this.props.center.users[0]);
   }
 
   render() {
-    if (!this.props.activeUser) {
+    console.log("this.props in middle page chat", this.props);
+    if (!this.props.center.activeUser) {
       return <div />;
     }
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="messages">
-          <h3> {this.props.activeUser.username} </h3>
+          <h3 > {this.props.center.activeUser.username} </h3>
           <br />
-          <div> {this.props.activeUser.message.map(message =>
+          <div> {this.props.center.activeUser.message.map(message =>
             (<div className="complete-message" key={message.text} >
               <div className="avatar-message">
-                <Avatar src={this.props.activeUser.image} size={30} />
+                <Avatar src={this.props.center.activeUser.image} size={30} />
               </div>
-              <div className="message-bubble">
+              <div className="message-bubble" style={{ fontFamily: 'Roboto, sans-serif' }}>
                 {message.text}
                 <br />
               </div>

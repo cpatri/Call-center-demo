@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { sendMessage } from '../actions';
 
 class InputBar extends Component {
   constructor(props) {
@@ -76,4 +78,4 @@ const styles = {
   },
 };
 
-export default InputBar;
+export default connect(null, { sendMessage })(InputBar);
