@@ -64,7 +64,10 @@ class LeftPageList extends Component {
         }
         key={user.username}
         primaryText={user.username}
-        secondaryText={user.message[user.message.length - 1].text}
+        secondaryText={
+          user.message[user.message.length - 1].id === 0 ?
+          user.message[user.message.length - 1].text :
+          `You: ${user.message[user.message.length - 1].text}`}
         secondaryTextLines={2}
         onClick={() => this.props.selectUser(user)}
       />

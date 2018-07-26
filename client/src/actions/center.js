@@ -11,7 +11,6 @@ export function selectUser(user) {
 }
 
 export function sendMessage(message) {
-  console.log("message passed through sendMessage action creator:", message);
   return {
     type: SEND_MESSAGE,
     payload: message,

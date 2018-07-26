@@ -58,6 +58,8 @@ const setUsers = ({ users, activeUser }, message) => users.map((chat) => {
   return chat;
 });
 
+// ...state takes the information within the state
+// anything after the comma is just a modification
 export default function (state = initState, action) {
   switch (action.type) {
     case 'USER_SELECTED':

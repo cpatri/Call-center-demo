@@ -33,11 +33,6 @@ function wrapComponent(Component, store) {
 }
 
 class GoldenLayoutWrapper extends Component {
-   /* constructor(props) {
-     super(props);
-     this.setNode = this.setNode.bind(this);
-  } */
-
   componentDidMount() {
     // build basic golden-layout config
     const config = {
@@ -78,7 +73,7 @@ class GoldenLayoutWrapper extends Component {
 
   render() {
     return (
-      <div style={{ height: 'calc(100vh - 64px)' }} ref={input => (this.layout = input)} />
+      <div style={{ height: 'calc(100vh - 64px)'}} ref={input => (this.layout = input)} />
     );
   }
 }

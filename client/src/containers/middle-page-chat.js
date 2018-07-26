@@ -13,13 +13,13 @@ class MiddlePageChat extends Component {
     this.props.selectUser(this.props.center.users[0]);
   }
 
-// render with avatars and messages on left side
   render() {
     const { messageListStyle,
             leftMessageBubbleStyle,
             rightMessageBubbleStyle,
             completeLeftMessageStyle,
             completeRightMessageStyle } = styles;
+
     if (!this.props.center.activeUser) {
       return <div />;
     }
@@ -30,15 +30,17 @@ class MiddlePageChat extends Component {
           <h3 > {this.props.center.activeUser.username} </h3>
           <br />
           <div> {this.props.center.activeUser.message.map(message =>
-            (<div style={message.id == 0 ? completeLeftMessageStyle : completeRightMessageStyle} key={message.text} >
+            (<div
+              style={message.id === 0 ? completeLeftMessageStyle : completeRightMessageStyle}
+              key={message.text}
+            >
               {!message.id && <div className="avatar-message">
                 <Avatar src={this.props.center.activeUser.image} size={30} />
               </div>}
-              <div style={message.id == 0 ? leftMessageBubbleStyle: rightMessageBubbleStyle}>
+              <div style={message.id === 0 ? leftMessageBubbleStyle : rightMessageBubbleStyle}>
                 {message.text}
                 <br />
               </div>
-
               <br />
             </div>),
             <br />,
@@ -61,18 +63,19 @@ function mapStateToProps(state) {
 
 const styles = {
   messageListStyle: {
-    color: 'black',
     position: 'relative',
     height: '100%',
   },
   completeLeftMessageStyle: {
     display: 'flex',
     padding: '10px',
+    color: 'black',
   },
   completeRightMessageStyle: {
     display: 'flex',
     flexDirection: 'row-reverse',
     padding: '10px',
+    color: 'white',
   },
   leftMessageBubbleStyle: {
     background: '#fff',

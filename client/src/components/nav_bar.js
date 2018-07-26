@@ -10,7 +10,7 @@ import Notifications from 'material-ui/svg-icons/social/notifications';
 import Book from 'material-ui/svg-icons/action/book';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 import GoldenLayoutWrapper from './layout';
-
+import Avatar from 'material-ui/Avatar';
 
 class NavBar extends Component {
   constructor(props) {
@@ -22,7 +22,9 @@ class NavBar extends Component {
   onMenuButtonClick = () => this.setState({ drawerOpen: !this.state.drawerOpen })
 
   render() {
-    const contentStyle = { transition: 'margin-left 450ms cubic-bezier(0.23, 1, 0.32, 1)' };
+    const contentStyle = {
+      transition: 'margin-left 450ms cubic-bezier(0.23, 1, 0.32, 1)',
+    };
     const forceNavDown = { top: '64px' };
     if (this.state.drawerOpen) {
       contentStyle.marginLeft = 75;
@@ -35,6 +37,11 @@ class NavBar extends Component {
             <IconButton onClick={this.onMenuButtonClick} >
               <Menu />
             </IconButton>
+          }
+          iconElementRight={
+            <Avatar
+              src='https://avatars2.githubusercontent.com/u/19522672?s=460&v=4'
+              size={50} />
           }
         />
 

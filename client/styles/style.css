@@ -10,15 +10,3 @@ html {
   -webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-
-
-.username-list-item li {
-  padding: 10px;
-  border-bottom: 1px solid #555;
-  padding-left:35px;
-  list-style:none;
-  position: relative;
-}
-.username-list-item:hover{
-  background: #666;
-}
