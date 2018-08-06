@@ -17,7 +17,6 @@ const app = express();
 
 var phoneMessages = {};
 
-
 app.use(bodyParser.urlencoded({extended: false }));
 
 // parse application/json
@@ -42,8 +41,6 @@ app.post('/send', (req, res) => {
     processMessage(message);
   })
   .done();
-
-
 
   function processMessage(message) {
     var newMessage = {};
