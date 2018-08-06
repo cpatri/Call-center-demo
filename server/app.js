@@ -1,26 +1,13 @@
-'use strict';
+const http = require('http');
+const express = require('express');
+const util = require('util');
+const bodyParser = require('body-parser');
 
-//require('dotenv-safe').load();
+var ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
+var AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 
-const express = require('express')
-const init = require('./simplecontent/init')
+const twilio = require('twilio');
+const MessagingResponse = twilio.TwimlResponse.MessagingResponse;
 
-const app = express()
+const client = new twilio(ACCOUNT_SID, authToken);
 
-app.get("/", (req, res) => {
-  console.log("Responding to root route")
-  init()
-  res.send("Hello from ROOT")
-})
-
-app.get("/users", (req, res) => {
-  var user1 = {firstName: "Stephen", lastName: "Curry"}
-  const user2 = {firstName: "Kevin", lastName: "Durrant"}
-  res.json([user1,user2])
-  // res.send("Nodemon auto updates when I save this file")
-})
-
-
-app.listen(3003, () => {
-  console.log("Server is up and listening on 3003...")
-})
