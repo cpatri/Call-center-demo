@@ -17,6 +17,7 @@ const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 const app = express();
 
+// phoneMessages cont;ains the entire list of messages and phone numbers associated 
 var phoneMessages = {};
 
 // Initialize Firebase
@@ -29,6 +30,9 @@ var config = {
   messagingSenderId: "724217898399"
 };
 firebase.initializeApp(config);
+
+//reference to database service
+var database = firebase.database();
 
 app.use(bodyParser.urlencoded({extended: false }));
 
