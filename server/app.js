@@ -3,6 +3,8 @@ const http = require('http');
 const express = require('express');
 const util = require('util');
 const bodyParser = require('body-parser');
+const firebase = require('firebase');
+
 
 var ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 var AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
@@ -16,6 +18,17 @@ const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 const app = express();
 
 var phoneMessages = {};
+
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyCctjM4-V60XuK387-ovoTE3UaOhiW-JoQ",
+  authDomain: "impekable-chat-project.firebaseapp.com",
+  databaseURL: "https://impekable-chat-project.firebaseio.com",
+  projectId: "impekable-chat-project",
+  storageBucket: "impekable-chat-project.appspot.com",
+  messagingSenderId: "724217898399"
+};
+firebase.initializeApp(config);
 
 app.use(bodyParser.urlencoded({extended: false }));
 
