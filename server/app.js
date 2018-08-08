@@ -77,7 +77,7 @@ app.post('/send', (req, res) => {
   }
 });
 
-
+/*
 app.post('/receive', (req, res) => {
 
   let newMessage = {};
@@ -98,8 +98,39 @@ app.post('/receive', (req, res) => {
   }
 
   console.log('phoneMessages: ', phoneMessages);
-});
+}); */
 
+// get messages from an actual phone number and send to call center
+app.post('/receive', (req, res)=> {
+  
+  let newMessage = {};
+  newMessage.me = false;
+  newMessage.message = req.body.Body;
+
+  let incomingNum = req.body.From;
+
+  var ref = database.ref();
+  var tf;
+  var numChildren;
+  ref.once("value")
+    .then(function(snapshot) {
+      tf = snapshot.child(incomingNum).exists();
+      numChildren = snapshot.numChildren();
+    });
+  
+  // if the incoming number isn't in the db, add it 
+  if (!tf) {
+    console.log('new number');
+    let messageList = [];
+    messageList.push(newMessage);
+
+    ref.child(incomingNum).set(messageList);
+  }
+  else{
+    var refNum = database.ref().child(incomingNum);
+    refNum.child(numChildren).set(newMessage);
+  }
+});
 
 app.listen(3003, () => {
   console.log("Server is up and listening on 3003...")
