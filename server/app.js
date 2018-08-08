@@ -59,11 +59,14 @@ app.post('/send', (req, res) => {
   })
   .done();
 
-  //add the message to firebase - SEND TO FRONT END 
   function processMessage(message) {
-    var newMessageData = {};
     var receivingNum = message.to;
-    newMessageData[myNumber] = message.body;
+    var newMessageData = {
+      number: receivingNum,
+      timestamp: Date.now(),
+      message: message.body
+    };
+ 
 
     var ref =database.ref('/messages');
     ref.child(receivingNum).once("value", snapshot => {
@@ -87,9 +90,11 @@ app.post('/receive', (req, res)=> {
   
   let incomingNum = req.body.From;
 
-  var newMessageData = {};
-  newMessageData[incomingNum] = req.body.Body;
-
+  var newMessageData = {
+    number: incomingNum,
+    timestamp: Date.now(),
+    message: req.body.Body
+  };
 
   var ref = database.ref('/messages');
   ref.child(incomingNum).once("value", snapshot => {

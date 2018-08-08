@@ -54,6 +54,26 @@ class LeftPageList extends Component {
     ListItem.defaultProps.disableFocusRipple = true;
   }
   renderList() {
+    /*return this.props.messages.map((user, index) => (
+      <ListItem
+        value={index}
+        leftAvatar={
+          <Avatar
+            src={user.image}
+            size={30}
+          />
+        }
+        key={user.username}
+        primaryText={user.username}
+        secondaryText={
+          user.message[user.message.length - 1].id === 0 ?
+          user.message[user.message.length - 1].text :
+          `You: ${user.message[user.message.length - 1].text}`}
+        secondaryTextLines={2}
+        onClick={() => this.props.selectUser(user)}
+      />
+    )); */
+
     var renderedList = Object.keys(this.props.messages);
     console.log(renderedList);
     return Object.keys(this.props.messages).map((phoneNum, index) => (
@@ -67,6 +87,9 @@ class LeftPageList extends Component {
         }
         key={phoneNum}
         primaryText={phoneNum}
+        secondaryText={
+
+        }
       />
         
     ));

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Firebase from 'firebase';
 import { BrowserRouter as Router } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
