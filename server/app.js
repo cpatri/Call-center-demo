@@ -59,7 +59,7 @@ app.post('/send', (req, res) => {
   })
   .done();
 
-  //add the message to firebase
+  //add the message to firebase - SEND TO FRONT END 
   function processMessage(message) {
     var newMessageData = {};
     var receivingNum = message.to;

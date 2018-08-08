@@ -10,7 +10,7 @@ const muiTheme = getMuiTheme();
 
 class MiddlePageChat extends Component {
   componentWillMount() {
-    this.props.selectUser(this.props.center.users[0]);
+    this.props.selectUser(this.props.center.messages[0]);
   }
 
   render() {

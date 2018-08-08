@@ -1,7 +1,7 @@
-
+//users will be an empty array 
 const initState = {
   activeUser: '',
-  users: [
+  /*messages: [
     {
       username: 'Harry Potter',
       message: [{
@@ -11,7 +11,7 @@ const initState = {
         id: 0,
         text: 'I also saw him in the room of requirements',
       }],
-      image: 'https://vignette.wikia.nocookie.net/harrypotter/images/b/ba/Harry-Potter-1-.jpg/revision/latest?cb=20090725202753',
+      image: 'https://api.adorable.io/avatars/255/+14088169237@adorable.png',
     },
 
     {
@@ -23,7 +23,7 @@ const initState = {
         id: 0,
         text: 'This test is going to be so hard!',
       }],
-      image: 'https://78.media.tumblr.com/6f3d171e49124b15429a8fb6b556b861/tumblr_p1dzfudWbF1vcmbt9o1_400.png',
+      image: 'https://api.adorable.io/avatars/255/+17026755189@adorable.png',
     },
 
     {
@@ -35,9 +35,29 @@ const initState = {
         id: 0,
         text: 'Have you seen Scabbers?',
       }],
-      image: 'https://typeset-beta.imgix.net/lovelace/uploads/36/908c1ab0-9b56-0132-a2c8-0e6808eb79bf.jpg',
+      image: 'https://api.adorable.io/avatars/255/+18475325683@adorable.png',
     },
-  ],
+  ], */
+  messages: {
+    '+14088169237': {
+      '-LJPaMut8jIXLCt_d-kM': {
+        '+14088169237': 'Hello!'
+      }
+    },
+    '+17026755189': {
+      '-LJQEkzM9d11cxAkl76s': {
+        '+17026755189': 'Hey Caroline'
+      }
+    },
+    '+18475325683': {
+      '-LJP_vRWk9UTSNoNdeEw': {
+        '+18475325683:': 'Hi'
+      },
+      '-LJPa48OM1NRmnU2Z7QQ': {
+        '+15153258366': 'what do you need help with?'
+      },
+    }
+  },
   message: '',
 };
 
@@ -64,9 +84,10 @@ export default function (state = initState, action) {
   switch (action.type) {
     case 'USER_SELECTED':
       return { ...state, activeUser: action.payload };
-    case 'SEND_MESSAGE':
+    case 'SEND_MESSAGES':
       // when the message is sent, only update the users array
       return { ...state, users: setUsers(state, action.payload) };
   }
   return state;
 }
+

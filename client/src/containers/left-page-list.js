@@ -8,6 +8,7 @@ import { List, ListItem, makeSelectable } from 'material-ui/List';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { selectUser } from '../actions/index';
+import { TWILIO_NUMBER } from '../config/index';
 
 const muiTheme = getMuiTheme();
 
@@ -53,25 +54,25 @@ class LeftPageList extends Component {
     ListItem.defaultProps.disableFocusRipple = true;
   }
   renderList() {
-    return this.props.users.map((user, index) => (
+    var renderedList = Object.keys(this.props.messages);
+    console.log(renderedList);
+    return Object.keys(this.props.messages).map((phoneNum, index) => (
       <ListItem
         value={index}
         leftAvatar={
-          <Avatar
-            src={user.image}
+          <Avatar 
+            src={`https://api.adorable.io/avatars/255/${phoneNum}@adorable.png`}
             size={30}
           />
         }
-        key={user.username}
-        primaryText={user.username}
-        secondaryText={
-          user.message[user.message.length - 1].id === 0 ?
-          user.message[user.message.length - 1].text :
-          `You: ${user.message[user.message.length - 1].text}`}
-        secondaryTextLines={2}
-        onClick={() => this.props.selectUser(user)}
+        key={phoneNum}
+        primaryText={phoneNum}
       />
+        
     ));
+
+  
+
   }
   render() {
     return (
@@ -87,7 +88,7 @@ class LeftPageList extends Component {
 }
 
 LeftPageList.PropTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
+  messages: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
   })).isRequired,
@@ -95,7 +96,7 @@ LeftPageList.PropTypes = {
 
 function mapStateToProps(state) {
   return {
-    users: state.center.users,
+    messages: state.center.messages,
   };
 }
 function mapDispatchToProps(dispatch) {
