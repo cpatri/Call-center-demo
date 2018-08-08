@@ -103,33 +103,44 @@ app.post('/receive', (req, res) => {
 // get messages from an actual phone number and send to call center
 app.post('/receive', (req, res)=> {
   
-  let newMessage = {};
-  newMessage.me = false;
-  newMessage.message = req.body.Body;
-
   let incomingNum = req.body.From;
 
-  var ref = database.ref();
-  var tf;
-  var numChildren;
-  ref.once("value")
-    .then(function(snapshot) {
-      tf = snapshot.child(incomingNum).exists();
-      numChildren = snapshot.numChildren();
-    });
-  
-  // if the incoming number isn't in the db, add it 
-  if (!tf) {
-    console.log('new number');
-    let messageList = [];
-    messageList.push(newMessage);
+  var newMessageData = {
+    incomingNumber: req.body.From,
+    incomingMessage: req.body.Body
+  };
 
-    ref.child(incomingNum).set(messageList);
-  }
-  else{
-    var refNum = database.ref().child(incomingNum);
-    refNum.child(numChildren).set(newMessage);
-  }
+
+  var ref = database.ref('/messages');
+  ref.child(incomingNum).once("value", snapshot => {
+    //if the number isn't in the list of messages, add it
+
+    if(!(snapshot.exists())) {
+      console.log('new number');
+      //let messageList = [];
+      //messageList.push(newMessage);
+      //set the incoming number key first
+      ref.child(incomingNum).set(0);
+
+      //add the message
+      var newMessageKey = ref.child(incomingNum).push().key;
+      var updates = {};
+
+      updates['/messages/' + incomingNum + '/' + newMessageKey] = newMessageData;
+      database.ref().update(updates);
+    }
+    else {
+      //var numChildren = snapshot.numChildren();
+      //console.log('numChildren: ', numChildren);
+      //var refNum = ref.child(incomingNum);
+      //refNum.child(numChildren).set(newMessage);
+      var newMessageKey = ref.child(incomingNum).push().key;
+      var updates = {};
+      updates['/messages/' + incomingNum + '/' + newMessageKey] = newMessageData;
+      database.ref().update(updates);
+    }
+  });
+
 });
 
 app.listen(3003, () => {
