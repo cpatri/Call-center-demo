@@ -11,52 +11,32 @@ const muiTheme = getMuiTheme();
 
 class MiddlePageChat extends Component {
   componentWillMount() {
+   // console.log('this.props.center.lastMessages in componentWillMount: ', this.props.center.lastMessages );
+    //console.log('this.props.center.messages in componentWillMount: ', this.props.center.messages);
     
-    this.props.selectUser(Object.keys(this.props.center.messages)[0]);
+    //this.props.selectUser(Object.keys(this.props.center.messages)[0]);
     
+    /*const lastMessagesRef = firebase.database().ref('lastMessages');
+    lastMessagesRef.on('value', function(snapshot) {
+      store.dispatch(updateLastMessage(snapshot.val()));
+    }); */
   }
+ 
+
 
   render() {
-    console.log('middle page chat render called');
     const { messageListStyle,
             leftMessageBubbleStyle,
             rightMessageBubbleStyle,
             completeLeftMessageStyle,
             completeRightMessageStyle } = styles;
-    
+
+    console.log('this.props.center.lastMessages', this.props.center.lastMessages);
+    console.log('this.props.center.messages', this.props.center.messages);
     if (!this.props.center.activeUser) {
-      return <div />;
+      return null;
     }
-    //console.log(this.props.center.activeUser);
-    //gives the children of 
-    /*return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div style={messageListStyle}>
-          <h3 > {this.props.center.activeUser.username} </h3>
-          <br />
-          <div> {this.props.center.activeUser.message.map(message =>
-            (<div
-              style={message.id === 0 ? completeLeftMessageStyle : completeRightMessageStyle}
-              key={message.text}
-            >
-              {!message.id && <div className="avatar-message">
-                <Avatar src={this.props.center.activeUser.image} size={30} />
-              </div>}
-              <div style={message.id === 0 ? leftMessageBubbleStyle : rightMessageBubbleStyle}>
-                {message.text}
-                <br />
-              </div>
-              <br />
-            </div>),
-            <br />,
-            )}
-          </div>
-          <InputBar />
-        </div>
-      </MuiThemeProvider>
-    
-    ); */
-    
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={messageListStyle}>
@@ -65,7 +45,7 @@ class MiddlePageChat extends Component {
           <div> {Object.values(this.props.center.messages[this.props.center.activeUser]).map((messageInfo)=> 
             (<div 
                 style={messageInfo.number != TWILIO_NUMBER ? completeLeftMessageStyle : completeRightMessageStyle}
-                key = {messageInfo.message}
+                key = {messageInfo.message + messageInfo.timestamp}
               >
                 {messageInfo.number != TWILIO_NUMBER ?  <div className="avatar-message">
                   <Avatar src={`https://api.adorable.io/avatars/255/${messageInfo.number}@adorable.png`} size={30} />

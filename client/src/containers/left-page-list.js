@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
@@ -54,7 +53,6 @@ class LeftPageList extends Component {
     ListItem.defaultProps.disableFocusRipple = true;
   }
   renderList() {
-    console.log('this.props.lastMessages: ', this.props.lastMessages);
     if (!this.props.lastMessages) {
       return null;
     }
@@ -90,16 +88,10 @@ class LeftPageList extends Component {
   }
 }
 
-LeftPageList.PropTypes = {
-  messages: PropTypes.arrayOf(PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
-  })).isRequired,
-}; 
+
 
 function mapStateToProps(state) {
   return {
-    messages: state.center.messages,
     lastMessages: state.center.lastMessages,
   };
 }

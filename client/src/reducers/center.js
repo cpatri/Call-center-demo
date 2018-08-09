@@ -1,6 +1,6 @@
 
 import { TWILIO_NUMBER } from '../config/index';
-import { USER_SELECTED, SEND_MESSAGES, UPDATE_LAST_MESSAGE} from '../actions/center';
+import { USER_SELECTED, SEND_MESSAGES, UPDATE_LAST_MESSAGE, SET_ACTIVE_USER} from '../actions/center';
 
 
 
@@ -44,32 +44,6 @@ const initState = {
     },
   ], */
   messages: {
-    '+14088169237': {
-      '-LJPaMut8jIXLCt_d-kM': {
-        message: 'Hello!',
-        number: '+14088169237',
-        timestamp: 1533771662887,
-      }
-    },
-    '+17026755189': {
-      '-LJQEkzM9d11cxAkl76s': {
-        message: 'Hey Caroline',
-        number: '+17026755189',
-        timestamp: 1533771696966
-      }
-    },
-    '+18475325683': {
-      '-LJP_vRWk9UTSNoNdeEw': {
-        message: 'Hi',
-        number: '+18475325683',
-        timestamp: 1534406970966 
-      },
-      '-LJPa48OM1NRmnU2Z7QQ': {
-        message:'what do you need help with?',
-        number: '+15153258366',
-        timestamp: 15344035839439
-      },
-    }
   },
   lastMessages: {
   },
@@ -106,8 +80,7 @@ const setMessages = ({messages, activeUser}, message) => {
   return newMessages;
 };
 
-const setLastMessages = ({lastMessages, activeUser}, message) => {
-  console.log('lastMessages: ', lastMessages);
+/*const setLastMessages = ({lastMessages, activeUser}, message) => {
   var messageInfo = {
     message: message,
     number: TWILIO_NUMBER,
@@ -116,21 +89,24 @@ const setLastMessages = ({lastMessages, activeUser}, message) => {
   var newLastMessages = {...lastMessages};
   newLastMessages[activeUser] = messageInfo;
   return newLastMessages;
-};
+}; */
 
 // ...state takes the information within the state
 // anything after the comma is just a modification
 export default function (state = initState, action) {
-  console.log('action: ', action);
   switch (action.type) {
     case USER_SELECTED:
       return { ...state, activeUser: action.payload };
     case SEND_MESSAGES:
       // when the message is sent, only update the users array
-      //return { ...state, users: setUsers(state, action.payload) };
-      return { ...state, messages: setMessages(state, action.payload), lastMessages: setLastMessages(state, action.payload) };
+      //return { ...state, messages: setMessages(state, action.payload), lastMessages: setLastMessages(state, action.payload) };
+      return {...state, messages: action.payload};
     case UPDATE_LAST_MESSAGE:
       return {...state, lastMessages: action.payload};
+    case SET_ACTIVE_USER:
+      if (state.activeUser == '') {
+        return {...state, activeUser: action.payload}
+      }
   }
   return state;
 }
