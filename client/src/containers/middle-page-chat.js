@@ -17,6 +17,7 @@ class MiddlePageChat extends Component {
   }
 
   render() {
+    console.log('middle page chat render called');
     const { messageListStyle,
             leftMessageBubbleStyle,
             rightMessageBubbleStyle,
@@ -28,10 +29,6 @@ class MiddlePageChat extends Component {
     }
     //console.log(this.props.center.activeUser);
     //gives the children of 
-    console.log(Object.values(this.props.center.messages[this.props.center.activeUser]))
-    Object.values(this.props.center.messages[this.props.center.activeUser]).map((messageInfo)=> {
-      console.log(messageInfo.message);
-    });
     /*return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={messageListStyle}>

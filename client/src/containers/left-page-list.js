@@ -73,6 +73,7 @@ class LeftPageList extends Component {
         onClick={() => this.props.selectUser(user)}
       />
     )); */
+    console.log('this.props.lastMessages ', this.props.lastMessages);
     return Object.keys(this.props.messages).map((phoneNum, index) => (
       <ListItem
         value={index}
@@ -84,7 +85,8 @@ class LeftPageList extends Component {
         }
         key={phoneNum}
         primaryText={phoneNum}
-        secondaryText= {this.props.lastMessages[phoneNum].message}
+        secondaryText= {this.props.lastMessages[phoneNum].number == TWILIO_NUMBER ?
+          `You: ${this.props.lastMessages[phoneNum].message}` : this.props.lastMessages[phoneNum].message }
         secondaryTextLines={2}
         onClick={() => this.props.selectUser(phoneNum)}
       />    
@@ -94,6 +96,7 @@ class LeftPageList extends Component {
 
   }
   render() {
+    console.log('left page list render called');
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Paper>
@@ -111,7 +114,7 @@ LeftPageList.PropTypes = {
     username: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
   })).isRequired,
-};
+}; 
 
 function mapStateToProps(state) {
   return {
@@ -119,8 +122,6 @@ function mapStateToProps(state) {
     lastMessages: state.center.lastMessages,
   };
 }
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectUser }, dispatch);
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LeftPageList);
+
+export default connect(mapStateToProps, {selectUser})(LeftPageList);

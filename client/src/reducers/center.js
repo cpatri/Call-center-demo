@@ -1,4 +1,5 @@
-//users will be an empty array 
+
+import { TWILIO_NUMBER } from '../config/index';
 const initState = {
   activeUser: '',
   /*messages: [
@@ -103,6 +104,31 @@ const setUsers = ({ users, activeUser }, message) => users.map((chat) => {
   return chat;
 });
 
+const setMessages = ({messages, activeUser}, message) => {
+
+  var messageInfo = {
+    message: message,
+    number: TWILIO_NUMBER,
+    timestamp: Date.now(),
+  }
+  var randomKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  var newMessages = messages;
+  newMessages[activeUser][randomKey] = messageInfo;
+  return newMessages;
+};
+
+const setLastMessages = ({lastMessages, activeUser}, message) => {
+  console.log('lastMessages: ', lastMessages);
+  var messageInfo = {
+    message: message,
+    number: TWILIO_NUMBER,
+    timestamp: Date.now(),
+  }
+  var newLastMessages = lastMessages;
+  newLastMessages[activeUser] = messageInfo;
+  return newLastMessages;
+};
+
 // ...state takes the information within the state
 // anything after the comma is just a modification
 export default function (state = initState, action) {
@@ -111,7 +137,8 @@ export default function (state = initState, action) {
       return { ...state, activeUser: action.payload };
     case 'SEND_MESSAGES':
       // when the message is sent, only update the users array
-      return { ...state, users: setUsers(state, action.payload) };
+      //return { ...state, users: setUsers(state, action.payload) };
+      return { ...state, messages: setMessages(state, action.payload), lastMessages: setLastMessages(state, action.payload) };
   }
   return state;
 }
