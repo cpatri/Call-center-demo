@@ -17,7 +17,7 @@ window.ReactDOM = ReactDOM;
 
 const createStoreWithMiddleWare = applyMiddleware(ReduxThunk, ReduxPromise)(createStore);
 
-const store = createStoreWithMiddleWare(reducers);
+export const store = createStoreWithMiddleWare(reducers);
 
 function wrapComponent(Component, store) {
   class Wrapped extends React.Component {

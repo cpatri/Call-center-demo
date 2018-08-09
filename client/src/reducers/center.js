@@ -1,5 +1,9 @@
 
 import { TWILIO_NUMBER } from '../config/index';
+import { USER_SELECTED, SEND_MESSAGES, UPDATE_LAST_MESSAGE} from '../actions/center';
+
+
+
 const initState = {
   activeUser: '',
   /*messages: [
@@ -68,21 +72,6 @@ const initState = {
     }
   },
   lastMessages: {
-    '+14088169237': {
-        message: 'Hello!',
-        number: '+14088169237',
-        timestamp: 1533771662887
-    },
-	  '+17026755189': {
-        message: 'Hey Caroline',
-        number: '+17026755189',
-	  		timestamp: 1533771696966
-    },
-    '+18475325683': {
-        message: 'what do you need help with?',
-        number: '+15153258366',
-        timestamp: 15344035839439
-    },
   },
   message: '',
 };
@@ -112,7 +101,7 @@ const setMessages = ({messages, activeUser}, message) => {
     timestamp: Date.now(),
   }
   var randomKey = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-  var newMessages = messages;
+  var newMessages = {...messages};
   newMessages[activeUser][randomKey] = messageInfo;
   return newMessages;
 };
@@ -124,7 +113,7 @@ const setLastMessages = ({lastMessages, activeUser}, message) => {
     number: TWILIO_NUMBER,
     timestamp: Date.now(),
   }
-  var newLastMessages = lastMessages;
+  var newLastMessages = {...lastMessages};
   newLastMessages[activeUser] = messageInfo;
   return newLastMessages;
 };
@@ -132,13 +121,16 @@ const setLastMessages = ({lastMessages, activeUser}, message) => {
 // ...state takes the information within the state
 // anything after the comma is just a modification
 export default function (state = initState, action) {
+  console.log('action: ', action);
   switch (action.type) {
-    case 'USER_SELECTED':
+    case USER_SELECTED:
       return { ...state, activeUser: action.payload };
-    case 'SEND_MESSAGES':
+    case SEND_MESSAGES:
       // when the message is sent, only update the users array
       //return { ...state, users: setUsers(state, action.payload) };
       return { ...state, messages: setMessages(state, action.payload), lastMessages: setLastMessages(state, action.payload) };
+    case UPDATE_LAST_MESSAGE:
+      return {...state, lastMessages: action.payload};
   }
   return state;
 }

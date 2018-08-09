@@ -54,26 +54,11 @@ class LeftPageList extends Component {
     ListItem.defaultProps.disableFocusRipple = true;
   }
   renderList() {
-    /*return this.props.messages.map((user, index) => (
-      <ListItem
-        value={index}
-        leftAvatar={
-          <Avatar
-            src={user.image}
-            size={30}
-          />
-        }
-        key={user.username}
-        primaryText={user.username}
-        secondaryText={
-          user.message[user.message.length - 1].id === 0 ?
-          user.message[user.message.length - 1].text :
-          `You: ${user.message[user.message.length - 1].text}`}
-        secondaryTextLines={2}
-        onClick={() => this.props.selectUser(user)}
-      />
-    )); */
-    return Object.keys(this.props.messages).map((phoneNum, index) => (
+    console.log('this.props.lastMessages: ', this.props.lastMessages);
+    if (!this.props.lastMessages) {
+      return null;
+    }
+    return Object.keys(this.props.lastMessages).map((phoneNum, index) => (
       <ListItem
         value={index}
         leftAvatar={
@@ -91,11 +76,8 @@ class LeftPageList extends Component {
       />    
     ));
 
-  
-
   }
   render() {
-    console.log('left page list render called');
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Paper>

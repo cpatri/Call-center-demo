@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { sendMessages } from '../actions';
 
