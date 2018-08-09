@@ -57,7 +57,7 @@ const initState = {
     '+18475325683': {
       '-LJP_vRWk9UTSNoNdeEw': {
         message: 'Hi',
-        number: '+18475325683:',
+        number: '+18475325683',
         timestamp: 1534406970966 
       },
       '-LJPa48OM1NRmnU2Z7QQ': {

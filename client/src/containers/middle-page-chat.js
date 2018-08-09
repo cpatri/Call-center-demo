@@ -54,7 +54,9 @@ class MiddlePageChat extends Component {
           <InputBar />
         </div>
       </MuiThemeProvider>
+    
     ); */
+    
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={messageListStyle}>

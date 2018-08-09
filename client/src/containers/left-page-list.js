@@ -73,13 +73,12 @@ class LeftPageList extends Component {
         onClick={() => this.props.selectUser(user)}
       />
     )); */
-    console.log('this.props.lastMessages ', this.props.lastMessages);
     return Object.keys(this.props.messages).map((phoneNum, index) => (
       <ListItem
         value={index}
         leftAvatar={
           <Avatar 
-            src={`https://api.adorable.io/avatars/255/${phoneNum}@adorable.png`}
+            src={`https://api.adorable.io/avatars/255/${ phoneNum }@adorable.png`}
             size={30}
           />
         }
