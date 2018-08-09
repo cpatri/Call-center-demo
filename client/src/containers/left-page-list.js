@@ -73,7 +73,6 @@ class LeftPageList extends Component {
         onClick={() => this.props.selectUser(user)}
       />
     )); */
-
     return Object.keys(this.props.messages).map((phoneNum, index) => (
       <ListItem
         value={index}
@@ -85,7 +84,7 @@ class LeftPageList extends Component {
         }
         key={phoneNum}
         primaryText={phoneNum}
-        secondaryText= {this.props.people[phoneNum].lastMessage.message}
+        secondaryText= {this.props.lastMessages[phoneNum].message}
         secondaryTextLines={2}
         onClick={() => this.props.selectUser(phoneNum)}
       />    
@@ -117,7 +116,7 @@ LeftPageList.PropTypes = {
 function mapStateToProps(state) {
   return {
     messages: state.center.messages,
-    people: state.center.people,
+    lastMessages: state.center.lastMessages,
   };
 }
 function mapDispatchToProps(dispatch) {

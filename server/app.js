@@ -62,7 +62,7 @@ app.post('/send', (req, res) => {
   function processMessage(message) {
     var receivingNum = message.to;
     var newMessageData = {
-      number: receivingNum,
+      number: message.from,
       timestamp: Date.now(),
       message: message.body
     };
@@ -79,6 +79,17 @@ app.post('/send', (req, res) => {
 
           updates['/messages/' + receivingNum + '/' + newMessageKey] = newMessageData;
           database.ref().update(updates);
+    });
+
+    var lastMesssagesRef = database.ref('/lastMessages');
+
+    lastMesssagesRef.child(receivingNum).once("value", snapshot => {
+      if(!snapshot.exists()) {
+        lastMesssagesRef.child(receivingNum).set(newMessageData);
+      }
+      var updates = {};
+      updates['/lastMessages/'+ receivingNum] = newMessageData;
+      database.ref().update(updates);
     });
 
   }
@@ -111,13 +122,17 @@ app.post('/receive', (req, res)=> {
     database.ref().update(updates);
   });
 
-  /*var peopleRef = database.peopleRef('/people');
-  peopleRef.child(incomingNum).once("value", snapshot => {
-    if(!(snapshot.exists())) {
-      peopleRef.child(incomingNum).set(0);
+  var lastMesssagesRef = database.ref('/lastMessages');
 
+  lastMesssagesRef.child(incomingNum).once("value", snapshot => {
+    if(!(snapshot.exists())) {
+      lastMesssagesRef.child(incomingNum).set(newMessageData);
     }
-  });*/
+    var updates = {};
+    updates['/lastMessages/'+ incomingNum] = newMessageData;
+    database.ref().update(updates);
+
+  });
 
 });
 

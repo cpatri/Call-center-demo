@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { sendMessage } from '../actions';
+import { sendMessages } from '../actions';
 
 class InputBar extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class InputBar extends Component {
       alert('Enter a message!');
     } else {
       // create an actionCreator to send the message
-      this.props.sendMessage(this.state.message);
+      this.props.sendMessages(this.state.message);
       this.setState({
         message: '',
       });
@@ -78,4 +78,4 @@ const styles = {
   },
 };
 
-export default connect(null, { sendMessage })(InputBar);
+export default connect(null, { sendMessages })(InputBar);

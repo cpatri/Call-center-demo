@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import InputBar from '../components/input-bar';
 import { selectUser } from '../actions';
+import { TWILIO_NUMBER } from '../config/index';
 
 const muiTheme = getMuiTheme();
 
@@ -25,8 +26,12 @@ class MiddlePageChat extends Component {
     if (!this.props.center.activeUser) {
       return <div />;
     }
-    console.log(this.props.center.activeUser);
-    
+    //console.log(this.props.center.activeUser);
+    //gives the children of 
+    console.log(Object.values(this.props.center.messages[this.props.center.activeUser]))
+    Object.values(this.props.center.messages[this.props.center.activeUser]).map((messageInfo)=> {
+      console.log(messageInfo.message);
+    });
     /*return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={messageListStyle}>
@@ -58,9 +63,23 @@ class MiddlePageChat extends Component {
         <div style={messageListStyle}>
           <h3> {this.props.center.activeUser} </h3> 
           <br />
-          <h3> 
-
-          </h3>
+          <div> {Object.values(this.props.center.messages[this.props.center.activeUser]).map((messageInfo)=> 
+            (<div 
+                style={messageInfo.number != TWILIO_NUMBER ? completeLeftMessageStyle : completeRightMessageStyle}
+                key = {messageInfo.message}
+              >
+                {messageInfo.number != TWILIO_NUMBER ?  <div className="avatar-message">
+                  <Avatar src={`https://api.adorable.io/avatars/255/${messageInfo.number}@adorable.png`} size={30} />
+                </div> : null }
+                <div style={messageInfo.number != TWILIO_NUMBER? leftMessageBubbleStyle : rightMessageBubbleStyle}>
+                  {messageInfo.message}
+                  <br />
+                </div>
+            </div>),
+            <br />,
+            )}
+          </div>
+            <InputBar />
         </div>
       </MuiThemeProvider>
     );

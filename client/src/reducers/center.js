@@ -66,27 +66,21 @@ const initState = {
       },
     }
   },
-  people: {
+  lastMessages: {
     '+14088169237': {
-      lastMessage: {
         message: 'Hello!',
         number: '+14088169237',
-        timestamp: 1533771662887,
-      }
+        timestamp: 1533771662887
     },
 	  '+17026755189': {
-	  	lastMessage: { 
         message: 'Hey Caroline',
         number: '+17026755189',
 	  		timestamp: 1533771696966
-	  	}
     },
     '+18475325683': {
-      lastMessage: {
         message: 'what do you need help with?',
         number: '+15153258366',
         timestamp: 15344035839439
-      },
     },
   },
   message: '',
