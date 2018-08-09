@@ -41,22 +41,53 @@ const initState = {
   messages: {
     '+14088169237': {
       '-LJPaMut8jIXLCt_d-kM': {
-        '+14088169237': 'Hello!'
+        message: 'Hello!',
+        number: '+14088169237',
+        timestamp: 1533771662887,
       }
     },
     '+17026755189': {
       '-LJQEkzM9d11cxAkl76s': {
-        '+17026755189': 'Hey Caroline'
+        message: 'Hey Caroline',
+        number: '+17026755189',
+        timestamp: 1533771696966
       }
     },
     '+18475325683': {
       '-LJP_vRWk9UTSNoNdeEw': {
-        '+18475325683:': 'Hi'
+        message: 'Hi',
+        number: '+18475325683:',
+        timestamp: 1534406970966 
       },
       '-LJPa48OM1NRmnU2Z7QQ': {
-        '+15153258366': 'what do you need help with?'
+        message:'what do you need help with?',
+        number: '+15153258366',
+        timestamp: 15344035839439
       },
     }
+  },
+  people: {
+    '+14088169237': {
+      lastMessage: {
+        message: 'Hello!',
+        number: '+14088169237',
+        timestamp: 1533771662887,
+      }
+    },
+	  '+17026755189': {
+	  	lastMessage: { 
+        message: 'Hey Caroline',
+        number: '+17026755189',
+	  		timestamp: 1533771696966
+	  	}
+    },
+    '+18475325683': {
+      lastMessage: {
+        message: 'what do you need help with?',
+        number: '+15153258366',
+        timestamp: 15344035839439
+      },
+    },
   },
   message: '',
 };

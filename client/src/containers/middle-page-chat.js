@@ -10,7 +10,9 @@ const muiTheme = getMuiTheme();
 
 class MiddlePageChat extends Component {
   componentWillMount() {
-    this.props.selectUser(this.props.center.messages[0]);
+    
+    this.props.selectUser(Object.keys(this.props.center.messages)[0]);
+    
   }
 
   render() {
@@ -19,12 +21,13 @@ class MiddlePageChat extends Component {
             rightMessageBubbleStyle,
             completeLeftMessageStyle,
             completeRightMessageStyle } = styles;
-
+    
     if (!this.props.center.activeUser) {
       return <div />;
     }
-
-    return (
+    console.log(this.props.center.activeUser);
+    
+    /*return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={messageListStyle}>
           <h3 > {this.props.center.activeUser.username} </h3>
@@ -47,6 +50,17 @@ class MiddlePageChat extends Component {
             )}
           </div>
           <InputBar />
+        </div>
+      </MuiThemeProvider>
+    ); */
+    return (
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div style={messageListStyle}>
+          <h3> {this.props.center.activeUser} </h3> 
+          <br />
+          <h3> 
+
+          </h3>
         </div>
       </MuiThemeProvider>
     );

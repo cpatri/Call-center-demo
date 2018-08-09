@@ -111,6 +111,14 @@ app.post('/receive', (req, res)=> {
     database.ref().update(updates);
   });
 
+  /*var peopleRef = database.peopleRef('/people');
+  peopleRef.child(incomingNum).once("value", snapshot => {
+    if(!(snapshot.exists())) {
+      peopleRef.child(incomingNum).set(0);
+
+    }
+  });*/
+
 });
 
 app.listen(3003, () => {
