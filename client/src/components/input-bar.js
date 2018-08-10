@@ -68,7 +68,7 @@ class InputBar extends Component {
 const styles = {
   formStyle: {
     width: '100%',
-    position: 'sticky',
+    position: 'absolute',
     backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'row',
