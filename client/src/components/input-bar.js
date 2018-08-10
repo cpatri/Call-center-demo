@@ -28,11 +28,11 @@ class InputBar extends Component {
       //MAKE A POST REQUEST WITH THE INFORMATION HERE!!!!!!!
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'http://localhost:3003/send', true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send(JSON.stringify({
         message: this.state.message,
         to: this.props.activeUser,
-      })); 
+      }));  
 
       //this.props.sendMessages(this.state.message);
       this.setState({
@@ -40,6 +40,7 @@ class InputBar extends Component {
       });
     }
   }
+
 
   render() {
     const { formStyle, inputStyle, buttonStyle } = styles;
@@ -85,6 +86,9 @@ const styles = {
     position: 'relative',
   },
 };
+
+
+
 
 function mapStateToProps(state) {
   return{
