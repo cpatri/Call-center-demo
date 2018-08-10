@@ -13,10 +13,10 @@ export function selectUser(user) {
   };
 }
 
-export function sendMessages(message) {
+export function sendMessages(messageList) {
   return {
     type: SEND_MESSAGES,
-    payload: message,
+    payload: messageList,
   };
 } 
 
@@ -44,7 +44,7 @@ ref.on('value', function(snapshot) {
 //var activeUser = store.getState().center.activeUser;
 const messagesRef = firebase.database().ref('messages');
 messagesRef.on('value', function(snapshot) {
-  console.log('messageRef snapshot: ', snapshot.val());
+ 
   store.dispatch(sendMessages(snapshot.val()));
 });
 

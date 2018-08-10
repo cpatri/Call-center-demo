@@ -25,7 +25,16 @@ class InputBar extends Component {
       alert('Enter a message!');
     } else {
       // create an actionCreator to send the message
-      this.props.sendMessages(this.state.message);
+      //MAKE A POST REQUEST WITH THE INFORMATION HERE!!!!!!!
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3003/send', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send(JSON.stringify({
+        message: this.state.message,
+        to: this.props.activeUser,
+      })); 
+
+      //this.props.sendMessages(this.state.message);
       this.setState({
         message: '',
       });
@@ -77,4 +86,9 @@ const styles = {
   },
 };
 
-export default connect(null, { sendMessages })(InputBar);
+function mapStateToProps(state) {
+  return{
+    activeUser: state.center.activeUser,
+  }
+}
+export default connect(mapStateToProps, { sendMessages })(InputBar);

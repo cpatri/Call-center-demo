@@ -10,20 +10,6 @@ import { TWILIO_NUMBER } from '../config/index';
 const muiTheme = getMuiTheme();
 
 class MiddlePageChat extends Component {
-  componentWillMount() {
-   // console.log('this.props.center.lastMessages in componentWillMount: ', this.props.center.lastMessages );
-    //console.log('this.props.center.messages in componentWillMount: ', this.props.center.messages);
-    
-    //this.props.selectUser(Object.keys(this.props.center.messages)[0]);
-    
-    /*const lastMessagesRef = firebase.database().ref('lastMessages');
-    lastMessagesRef.on('value', function(snapshot) {
-      store.dispatch(updateLastMessage(snapshot.val()));
-    }); */
-  }
- 
-
-
   render() {
     const { messageListStyle,
             leftMessageBubbleStyle,
@@ -31,8 +17,6 @@ class MiddlePageChat extends Component {
             completeLeftMessageStyle,
             completeRightMessageStyle } = styles;
 
-    console.log('this.props.center.lastMessages', this.props.center.lastMessages);
-    console.log('this.props.center.messages', this.props.center.messages);
     if (!this.props.center.activeUser) {
       return null;
     }
