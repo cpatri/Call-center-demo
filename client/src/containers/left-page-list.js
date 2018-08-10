@@ -34,7 +34,7 @@ function wrapState(ComposedComponent) {
 
     render() {
       return (
-        <ComposedComponent
+        <ComposedComponent 
           value={this.state.selectedIndex}
           onChange={this.handleRequestChange}
         >
@@ -78,8 +78,8 @@ class LeftPageList extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <Paper>
-          <SelectableList defaultValue={0}>
+        <Paper >
+          <SelectableList defaultValue={0} >
             {this.renderList()}
           </SelectableList>
         </Paper>
