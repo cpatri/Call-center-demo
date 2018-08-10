@@ -61,6 +61,7 @@ const styles = {
   messageListStyle: {
     position: 'relative',
     height: '100%',
+    overflowY: 'scroll',
   },
   completeLeftMessageStyle: {
     display: 'flex',

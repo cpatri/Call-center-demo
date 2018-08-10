@@ -68,9 +68,10 @@ class InputBar extends Component {
 const styles = {
   formStyle: {
     width: '100%',
-    position: 'absolute',
+    position: 'sticky',
     backgroundColor: 'white',
     display: 'flex',
+    flexDirection: 'row',
     bottom: 0,
     padding: 5,
   },
@@ -81,9 +82,11 @@ const styles = {
     fontWeight: 100,
     fontSize: '15px',
     fontFamily: 'Roboto, sans-serif',
+    order: 0,
   },
   buttonStyle: {
     position: 'relative',
+    order: 1,
   },
 };
 
