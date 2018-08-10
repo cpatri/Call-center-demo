@@ -152,7 +152,40 @@ app.post('/receive', (req, res)=> {
 
   });
 
+  /*client.lookups.phoneNumbers('+18475325683')
+              .fetch({type: 'caller-name'})
+              .then(phone_number => console.log(phone_number.callerName.caller_name))
+              .done();*/
+  
+  client.lookups.phoneNumbers(incomingNum)
+    .fetch({type: 'caller-name'})
+    .then(phone_number => {
+      addCustomerInfo(phone_number)
+    })
+    .done();
+  
+  function addCustomerInfo(phoneNumber) {
+    var customerName = phoneNumber.callerName.caller_name ? phoneNumber.callerName.caller_name : 'Name not available';
+    var callerType = phoneNumber.callerName.caller_type ? phoneNumber.callerName.caller_type : 'Caller type not available';
+    var newCustomerInfo = {
+      name: customerName,
+      callerType: callerType,
+      country: req.body.FromCountry,
+      state: req.body.FromState,
+      city: req.body.FromCity,
+      zipcode: req.body.FromZip,
+    }
+    
+    var customerInfoRef = database.ref('/customerInfo');
+    customerInfoRef.child(incomingNum).once("value", snapshot => {
+      if(!(snapshot.exists())) {
+        customerInfoRef.child(incomingNum).set(newCustomerInfo);
+      }
+    })
+  }
 });
+
+
 
 app.listen(3003, () => {
   console.log("Server is up and listening on 3003...")

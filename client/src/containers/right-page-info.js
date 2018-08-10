@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Avatar from 'material-ui/Avatar';
@@ -9,9 +7,7 @@ import Paper from 'material-ui/Paper';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Phone from 'material-ui/svg-icons/communication/phone';
-/*const RightPageInfo = () => {
-  return <input/>;
-}; */
+
 const muiTheme = getMuiTheme();
 
 class RightPageInfo extends Component {
@@ -45,6 +41,10 @@ class RightPageInfo extends Component {
                 disabled={true}
                 primaryText= "Location: San Jose, CA"
               />
+              <ListItem
+                disabled={true}
+                primaryText= "Phone carrier: AT&T"
+              />
               <Divider />
               <ListItem 
                 primaryText="Call this customer"
@@ -61,7 +61,6 @@ class RightPageInfo extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     activeUser: state.center.activeUser,
   }
