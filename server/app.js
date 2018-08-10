@@ -55,7 +55,8 @@ app.use((req, res, next ) => {
 
     // Pass to next layer of middleware
     next();
-})
+});
+
 app.get('/', (req, res) => {
   console.log("Responding to root route");
   res.send("Hello from ROOT");
