@@ -4,6 +4,8 @@ export const SEND_MESSAGES = 'SEND_MESSAGES';
 export const UPDATE_LAST_MESSAGE = 'UPDATE_LAST_MESSAGE';
 export const UPDATE_MESSAGE_LIST = 'UPDATE_MESSAGE_LIST';
 export const SET_ACTIVE_USER = 'SET_ACTIVE_USER';
+export const SET_CUSTOMER_INFO = 'SET_CUSTOMER_INFO';
+
 export function selectUser(user) {
   // selecUser is an action creator, needs to return an action
   // an object with a type property
@@ -34,6 +36,12 @@ export function setActiveUser(activeUser) {
   }
 }
 
+export function setCustomerInfo(customerInfoList) {
+  return {
+    type: SET_CUSTOMER_INFO,
+    payload: customerInfoList,
+  }
+}
 
 
 /*const ref = firebase.database().ref('messages/' + '+17026755189');
@@ -52,4 +60,9 @@ const lastMessagesRef = firebase.database().ref('lastMessages');
 lastMessagesRef.on('value', function(snapshot) {
   store.dispatch(updateLastMessage(snapshot.val()));
   store.dispatch(setActiveUser(Object.keys(snapshot.val())[0]))
+});
+
+const customerInfoRef = firebase.database().ref('customerInfo');
+customerInfoRef.on('value', function(snapshot) {
+  store.dispatch(setCustomerInfo(snapshot.val()));
 });

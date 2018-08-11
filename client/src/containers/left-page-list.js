@@ -78,11 +78,11 @@ class LeftPageList extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <Paper >
-          <SelectableList defaultValue={0} >
-            {this.renderList()}
-          </SelectableList>
-        </Paper>
+          <Paper  style={{maxHeight: '100vh', overflow: 'auto'}}>
+            <SelectableList defaultValue={0} >
+              {this.renderList()}
+            </SelectableList>
+          </Paper>
       </MuiThemeProvider>
     );
   }

@@ -13,7 +13,6 @@ const muiTheme = getMuiTheme();
 class RightPageInfo extends Component {
 
   render() {
-    console.log(this.props.activeUser);
     if (!(this.props.activeUser)){
       return null;
     }
@@ -35,16 +34,24 @@ class RightPageInfo extends Component {
               <Divider />
               <ListItem
                 disabled={true}
-                primaryText="Name: Caroline Liongosari"
+                primaryText={`Name: ${this.props.customerInfo[this.props.activeUser].name}`}
               />
               <ListItem
                 disabled={true}
-                primaryText= "Location: San Jose, CA"
+                primaryText= {`Country: ${this.props.customerInfo[this.props.activeUser].country}`}
               />
               <ListItem
                 disabled={true}
-                primaryText= "Phone carrier: AT&T"
+                primaryText= {`State: ${this.props.customerInfo[this.props.activeUser].state}`}
               />
+              <ListItem
+                disabled={true}
+                primaryText= {`City: ${this.props.customerInfo[this.props.activeUser].city}`}
+              />
+              <ListItem
+                disabled={true}
+                primaryText= {`Caller type: ${this.props.customerInfo[this.props.activeUser].callerType}`}
+              />              
               <Divider />
               <ListItem 
                 primaryText="Call this customer"
@@ -63,6 +70,7 @@ class RightPageInfo extends Component {
 function mapStateToProps(state) {
   return {
     activeUser: state.center.activeUser,
+    customerInfo: state.center.customerInfo,
   }
 }
 export default connect(mapStateToProps)(RightPageInfo);
