@@ -19,8 +19,6 @@ export default function (state = initState, action) {
     case USER_SELECTED:
       return { ...state, activeUser: action.payload };
     case SEND_MESSAGES:
-      // when the message is sent, only update the users array
-      //return { ...state, messages: setMessages(state, action.payload), lastMessages: setLastMessages(state, action.payload) };
       return {...state, messages: action.payload};
     case UPDATE_LAST_MESSAGE:
       return {...state, lastMessages: action.payload};
