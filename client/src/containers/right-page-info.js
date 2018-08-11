@@ -57,6 +57,11 @@ class RightPageInfo extends Component {
                 primaryText="Call this customer"
                 leftIcon={<Phone/>}
               />
+              <Divider />
+              <ListItem 
+                disabled={true}
+                primaryText="Notes- maybe this can be a fourth panel?"
+              />
               
 
           </List>
