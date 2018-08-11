@@ -64,7 +64,7 @@ const styles = {
     position: 'relative',
     height: '100vh',
     overflowY: 'scroll',
-    paddingBottom: '60px',
+    paddingBottom: '150px',
   },
   completeLeftMessageStyle: {
     display: 'flex',
