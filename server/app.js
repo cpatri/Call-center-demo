@@ -152,11 +152,6 @@ app.post('/receive', (req, res)=> {
 
   });
 
-  /*client.lookups.phoneNumbers('+18475325683')
-              .fetch({type: 'caller-name'})
-              .then(phone_number => console.log(phone_number.callerName.caller_name))
-              .done();*/
-  
   client.lookups.phoneNumbers(incomingNum)
     .fetch({type: 'caller-name'})
     .then(phone_number => {
@@ -184,8 +179,6 @@ app.post('/receive', (req, res)=> {
     })
   }
 });
-
-
 
 app.listen(3003, () => {
   console.log("Server is up and listening on 3003...")
