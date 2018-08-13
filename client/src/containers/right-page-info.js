@@ -4,10 +4,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Phone from 'material-ui/svg-icons/communication/phone';
 import RingVolume from 'material-ui/svg-icons/communication/ring-volume';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const muiTheme = getMuiTheme();
 const device = new Twilio.Device();
@@ -17,6 +19,7 @@ class RightPageInfo extends Component {
     this.state = {calling: false};
   }
   render() {
+    const { noteStyle, buttonStyle} = styles;
     if (!(this.props.activeUser)){
       return null;
     }
@@ -74,17 +77,51 @@ class RightPageInfo extends Component {
               <Divider />
               <ListItem 
                 disabled={true}
-                primaryText="Notes- maybe this can be a fourth panel?"
+                primaryText="Notes"
               />
-              
-
           </List>
+          <div id='notes-container'>
+            <form >
+              <textarea
+                display='block'
+                placeholder="Type notes here"
+                type="text"
+                style={noteStyle}
+              />
+              <RaisedButton
+                label="Submit"
+                className="note-submit"
+                style={buttonStyle}
+                primary
+              />
+            </form>
+        </div>
         </Paper>
       </MuiThemeProvider>
     )
 
   }
 }
+
+const styles = {
+  noteStyle: {
+    width: '100%',
+    height: '33vh',
+    boxShadow: 'inset 0px 0px 2px #95979b',
+    fontWeight: 100,
+    fontSize: '16px',
+    fontFamily: 'Roboto, sans-serif',
+    border: 'none',
+    color: 'rgba(0,0,0, 0.87)',
+    padding: '10px',
+    display: 'block'
+
+  },
+  buttonStyle: {
+    borderRadius: '2px',
+  }
+
+};
 function getToken(activeUser) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'http://localhost:3003/token', true);
