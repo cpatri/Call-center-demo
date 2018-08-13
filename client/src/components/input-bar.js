@@ -24,8 +24,6 @@ class InputBar extends Component {
     if (!this.state.message) {
       alert('Enter a message!');
     } else {
-      // create an actionCreator to send the message
-      //MAKE A POST REQUEST WITH THE INFORMATION HERE!!!!!!!
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'http://localhost:3003/send', true);
       xhr.setRequestHeader('Content-Type', 'application/json');
@@ -34,7 +32,6 @@ class InputBar extends Component {
         to: this.props.activeUser,
       }));  
 
-      //this.props.sendMessages(this.state.message);
       this.setState({
         message: '',
       });

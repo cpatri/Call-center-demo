@@ -49,7 +49,8 @@ app.use((req, res, next ) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 
     // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+
 
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'content-type');
@@ -204,22 +205,13 @@ app.get('/token', (req, res) => {
 });
 
 app.post('/voice', function (req, res) {
-  // Create TwiML response
-  var twiml = new VoiceResponse();
-  if(req.body.To) {
-    twiml.dial({ callerId: process.env.TWILIO_CALLER_ID}, () => {
-      // wrap the phone number or client name in the appropriate TwiML verb
-      // by checking if the number given has only digits and format symbols
-      if (/^[\d\+\-\(\) ]+$/.test(req.body.To)) {
-        this.number(req.body.To);
-      } else {
-        this.client(req.body.To);
-      }
-    });
+  const twiml  = new VoiceResponse();
+  if (req.body.To) {
+    const dial = twiml.dial({callerId: process.env.TWILIO_CALLER_ID});
+    dial.number(req.body.To); 
   } else {
-    twiml.say("Thanks for calling!");
+    twiml.say("Thanks for calling");
   }
-
   res.set('Content-Type', 'text/xml');
   res.send(twiml.toString());
 });
