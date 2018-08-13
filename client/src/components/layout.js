@@ -73,7 +73,7 @@ class GoldenLayoutWrapper extends Component {
 
   render() {
     return (
-      <div style={{ height: 'calc(100vh - 64px)'}} ref={input => (this.layout = input)} />
+      <div id='golden-layout-wrapper' style={{ height: 'calc(100vh - 64px)'}} ref={input => (this.layout = input)} />
     );
   }
 }

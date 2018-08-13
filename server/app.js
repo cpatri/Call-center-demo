@@ -5,18 +5,23 @@ const util = require('util');
 const bodyParser = require('body-parser');
 const firebase = require('firebase');
 
-
 var ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 var AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+var TWILIO_TWIML_APP_SID = process.env.TWILIO_TWIML_APP_SID;
+
+
+
+
 require('dotenv').load();
 
 const twilio = require('twilio');
+const ClientCapability = twilio.jwt.ClientCapability;
 const MessagingResponse = twilio.twiml.MessagingResponse;
+const VoiceResponse = twilio.twiml.VoiceResponse;
 
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 const app = express();
-
 // phoneMessages cont;ains the entire list of messages and phone numbers associated 
 var phoneMessages = {};
 
@@ -180,7 +185,45 @@ app.post('/receive', (req, res)=> {
   }
 });
 
+
+/*
+Generate a Capability Token for a Twilio Client user - it generates a random
+username for the client requesting a token.
+*/
+app.get('/token', (req, res) => {
+  const capability = new ClientCapability( {
+    accountSid: process.env.TWILIO_ACCOUNT_SID,
+    authToken: process.env.TWILIO_AUTH_TOKEN,
+  });
+  capability.addScope(
+    new ClientCapability.OutgoingClientScope({ applicationSid: process.env.TWILIO_TWIML_APP_SID})
+  );
+  const token = capability.toJwt();
+  res.set('Content-Type', 'application/jwt');
+  res.send(token);
+});
+
+app.post('/voice', function (req, res) {
+  // Create TwiML response
+  var twiml = new VoiceResponse();
+  if(req.body.To) {
+    twiml.dial({ callerId: process.env.TWILIO_CALLER_ID}, () => {
+      // wrap the phone number or client name in the appropriate TwiML verb
+      // by checking if the number given has only digits and format symbols
+      if (/^[\d\+\-\(\) ]+$/.test(req.body.To)) {
+        this.number(req.body.To);
+      } else {
+        this.client(req.body.To);
+      }
+    });
+  } else {
+    twiml.say("Thanks for calling!");
+  }
+
+  res.set('Content-Type', 'text/xml');
+  res.send(twiml.toString());
+});
+
 app.listen(3003, () => {
   console.log("Server is up and listening on 3003...")
-})
-
+});

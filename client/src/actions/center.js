@@ -44,12 +44,6 @@ export function setCustomerInfo(customerInfoList) {
 }
 
 
-/*const ref = firebase.database().ref('messages/' + '+17026755189');
-ref.on('value', function(snapshot) {
-  sendMessages(snapshot.val());
-}); */
-
-//var activeUser = store.getState().center.activeUser;
 const messagesRef = firebase.database().ref('messages');
 messagesRef.on('value', function(snapshot) {
  
