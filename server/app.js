@@ -205,6 +205,7 @@ app.get('/token', (req, res) => {
 });
 
 app.post('/voice', function (req, res) {
+  console.log(req.body.To);
   const twiml  = new VoiceResponse();
   if (req.body.To) {
     const dial = twiml.dial({callerId: process.env.TWILIO_CALLER_ID});
