@@ -28,6 +28,7 @@ export default function (state = initState, action) {
       if (state.activeUser == '') {
         return {...state, activeUser: action.payload}
       }
+      break;
     case SET_CUSTOMER_INFO:
       return {...state, customerInfo: action.payload};
     case UPDATE_NOTES:

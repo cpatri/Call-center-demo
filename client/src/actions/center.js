@@ -38,6 +38,7 @@ export function setActiveUser(activeUser) {
 }
 
 export function setCustomerInfo(customerInfoList) {
+  console.log('customerInfoList: ', customerInfoList);
   return {
     type: SET_CUSTOMER_INFO,
     payload: customerInfoList,
@@ -53,7 +54,6 @@ export function updateNotes(notesList) {
 
 const messagesRef = firebase.database().ref('messages');
 messagesRef.on('value', function(snapshot) {
- 
   store.dispatch(sendMessages(snapshot.val()));
 });
 

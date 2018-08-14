@@ -6,7 +6,6 @@ import { sendMessages } from '../actions';
 class InputBar extends Component {
   constructor(props) {
     super(props);
-
     this.state = { message: '' };
 
     this.onInputChange = this.onInputChange.bind(this);

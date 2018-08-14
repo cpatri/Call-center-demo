@@ -4,7 +4,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Phone from 'material-ui/svg-icons/communication/phone';
@@ -28,11 +27,8 @@ class RightPageInfo extends Component {
   }
   onFormSubmit(event) {
     event.preventDefault();
-    if (!this.state.notes) {
-      alert('Type some notes!');
-    } else {
       //store the notes into firebase under the active user
-      const notesRef = firebase.database().ref('notes');
+      const notesRef = firebase.database().ref('/notes');
       notesRef.child(this.props.activeUser).once("value", snapshot => {
         var newNotesInfo = {
           notes: this.state.notes,
@@ -48,7 +44,7 @@ class RightPageInfo extends Component {
           this.updateState();
         }
       });
-    }
+
   }
   updateState() {
     this.setState({
@@ -62,82 +58,100 @@ class RightPageInfo extends Component {
     }
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <Paper>
-          <List>
-              <ListItem 
-                disabled={true}
-                style= {{ fontSize:'20px'}}
-                primaryText="About this customer"
-               />
-              <Divider />
-              <ListItem 
-                disabled={true}
-                primaryText= {this.props.activeUser}
-                leftAvatar= {<Avatar src={`https://api.adorable.io/avatars/255/${this.props.activeUser}@adorable.png`} />}
-              />
-              <Divider />
-              <ListItem
-                disabled={true}
-                primaryText={`Name: ${this.props.customerInfo[this.props.activeUser].name}`}
-              />
-              <ListItem
-                disabled={true}
-                primaryText= {`Country: ${this.props.customerInfo[this.props.activeUser].country}`}
-              />
-              <ListItem
-                disabled={true}
-                primaryText= {`State: ${this.props.customerInfo[this.props.activeUser].state}`}
-              />
-              <ListItem
-                disabled={true}
-                primaryText= {`City: ${this.props.customerInfo[this.props.activeUser].city}`}
-              />
-              <ListItem
-                disabled={true}
-                primaryText= {`Caller type: ${this.props.customerInfo[this.props.activeUser].callerType}`}
-              />              
-              <Divider />
-              <ListItem 
-                primaryText= {this.state.calling ?  "Hang up": "Call this customer" }
-                leftIcon={this.state.calling? <RingVolume/>: <Phone/>}
-                onClick= {() => {
-                  this.setState({calling: !this.state.calling});
-                  if (!this.state.calling)  {
-                    getToken(this.props.activeUser); 
-                  }
-                  else{
-                    device.disconnectAll();
-                  }
-                }}
-              />
-              <Divider />
-              <ListItem 
-                disabled={true}
-                primaryText='Quick notes:'
-              />
-              <ListItem 
-                disabled={true}
-                primaryText={this.props.notes ? this.props.notes[this.props.activeUser].notes : null}
-              />
-          </List>
-          <div id='notes-container'>
-            <form >
-              <textarea
-                display='block'
-                placeholder="Type notes here"
-                type="text"
-                onChange={this.onInputChange}
-                style={noteStyle}
-              />
-              <RaisedButton
-                label="Update Notes"
-                className="note-submit"
-                style={buttonStyle}
-                onClick={this.onFormSubmit}
-                primary
-              />
-            </form>
-        </div>
+        <Paper >
+          <div id='paper' style={{overflowY:'auto', height: 'calc(100vh - 84px)'}}>
+            <List>
+                <ListItem 
+                  disabled={true}
+                  style= {{ fontSize:'20px'}}
+                  primaryText="About this customer"
+                />
+                <Divider />
+                <ListItem 
+                  disabled={true}
+                  primaryText= {this.props.activeUser}
+                  leftAvatar= {<Avatar src={`https://api.adorable.io/avatars/255/${this.props.activeUser}@adorable.png`} />}
+                />
+                <Divider />
+                <ListItem
+                  disabled={true}
+                  primaryText={ 
+                    this.props.customerInfo[this.props.activeUser]? 
+                    `Name: ${this.props.customerInfo[this.props.activeUser].name}`:
+                     null}
+                />
+                <ListItem
+                  disabled={true}
+                  primaryText= {
+                    this.props.customerInfo[this.props.activeUser] ?
+                    `Country: ${this.props.customerInfo[this.props.activeUser].country}`:
+                    null }
+                />
+                <ListItem
+                  disabled={true}
+                  primaryText= {
+                    this.props.customerInfo[this.props.activeUser] ?
+                    `State: ${this.props.customerInfo[this.props.activeUser].state}`:
+                    null}
+                />
+                <ListItem
+                  disabled={true}
+                  primaryText= {this.props.customerInfo[this.props.activeUser] ?
+                    `City: ${this.props.customerInfo[this.props.activeUser].city}`:
+                    null}
+                />
+                <ListItem
+                  disabled={true}
+                  primaryText= {this.props.customerInfo[this.props.activeUser] ?
+                    `Caller type: ${this.props.customerInfo[this.props.activeUser].callerType}`:
+                    null}
+                />              
+                <Divider />
+                <ListItem 
+                  primaryText= {this.state.calling ?  "Hang up": "Call this customer" }
+                  leftIcon={this.state.calling? <RingVolume/>: <Phone/>}
+                  onClick= {() => {
+                    this.setState({calling: !this.state.calling});
+                    if (!this.state.calling)  {
+                      getToken(this.props.activeUser); 
+                    }
+                    else{
+                      device.disconnectAll();
+                    }
+                  }}
+                />
+                <Divider />
+                <ListItem 
+                  disabled={true}
+                  primaryText='Quick notes:'
+                />
+                <ListItem 
+                  disabled={true}
+                  primaryText={this.props.notes ? this.props.notes[this.props.activeUser].notes : null}
+                />
+            </List>
+            <div id='notes-container'>
+              <form >
+                <textarea
+                  rows='4'
+                  display='block'
+                  placeholder="Type notes here"
+                  type="text"
+                  onChange={this.onInputChange}
+                  style={noteStyle}
+                />
+                <br/>
+                <RaisedButton
+                  label="Update Notes"
+                  className="note-submit"
+                  style={buttonStyle}
+                  onClick={this.onFormSubmit}
+                  primary
+                />
+                <br/>
+              </form>
+            </div>
+          </div>   
         </Paper>
       </MuiThemeProvider>
     )
@@ -147,8 +161,10 @@ class RightPageInfo extends Component {
 
 const styles = {
   noteStyle: {
-    width: '100%',
-    height: '100px',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '95%',
     boxShadow: 'inset 0px 0px 2px #95979b',
     fontWeight: 100,
     fontSize: '16px',
@@ -156,11 +172,15 @@ const styles = {
     border: 'none',
     color: 'rgba(0,0,0, 0.87)',
     padding: '10px',
-    display: 'block'
+
+
 
   },
   buttonStyle: {
-    borderRadius: '2px',
+    display: 'block',
+    marginLeft: '2.5%',
+    width: '131.6px',
+    
   }
 
 };

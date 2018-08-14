@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Modal from './modal';
 
 // import { Route } from 'react-router-dom';
 // import {AppBar} from 'material-ui'
@@ -12,7 +12,13 @@ class App extends Component {
     return (
       <div>
         <NavBar />
+        <div>
+          <Modal>
+            <h1> Hi! </h1>
+          </Modal>
+        </div>
       </div>
+
     );
   }
 }

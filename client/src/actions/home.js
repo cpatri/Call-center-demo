@@ -1,4 +1,4 @@
-import { SAY_HELLO } from './types';
+/*import { SAY_HELLO } from './types';
 
 export const sayHello = message => (dispatch) => {
   dispatch({
@@ -13,4 +13,4 @@ export const lfkjsdlkjs = message => (dispatch) => {
     type: SAY_HELLO,
     payload: message,
   });
-};
+}; */
