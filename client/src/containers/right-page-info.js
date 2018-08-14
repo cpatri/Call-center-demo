@@ -16,7 +16,44 @@ const device = new Twilio.Device();
 class RightPageInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {calling: false};
+    this.state = {calling: false, notes: ''};
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+  onInputChange(event) {
+    this.setState({
+      notes: event.target.value,
+    });
+  }
+  onFormSubmit(event) {
+    event.preventDefault();
+    if (!this.state.notes) {
+      alert('Type some notes!');
+    } else {
+      //store the notes into firebase under the active user
+      const notesRef = firebase.database().ref('notes');
+      notesRef.child(this.props.activeUser).once("value", snapshot => {
+        var newNotesInfo = {
+          notes: this.state.notes,
+        }
+        if(!snapshot.exists()) {
+          notesRef.child(this.props.activeUser).set(newNotesInfo);
+          this.updateState();
+        }
+        else {
+          var updates = {};
+          updates['/notes/'+ this.props.activeUser] = newNotesInfo;
+          firebase.database().ref().update(updates);
+          this.updateState();
+        }
+      });
+    }
+  }
+  updateState() {
+    this.setState({
+      notes: '',
+    });
   }
   render() {
     const { noteStyle, buttonStyle} = styles;
@@ -69,7 +106,6 @@ class RightPageInfo extends Component {
                     getToken(this.props.activeUser); 
                   }
                   else{
-                    console.log("Hanging up");
                     device.disconnectAll();
                   }
                 }}
@@ -77,7 +113,11 @@ class RightPageInfo extends Component {
               <Divider />
               <ListItem 
                 disabled={true}
-                primaryText="Notes"
+                primaryText='Quick notes:'
+              />
+              <ListItem 
+                disabled={true}
+                primaryText={this.props.notes ? this.props.notes[this.props.activeUser].notes : null}
               />
           </List>
           <div id='notes-container'>
@@ -86,12 +126,14 @@ class RightPageInfo extends Component {
                 display='block'
                 placeholder="Type notes here"
                 type="text"
+                onChange={this.onInputChange}
                 style={noteStyle}
               />
               <RaisedButton
-                label="Submit"
+                label="Update Notes"
                 className="note-submit"
                 style={buttonStyle}
+                onClick={this.onFormSubmit}
                 primary
               />
             </form>
@@ -106,7 +148,7 @@ class RightPageInfo extends Component {
 const styles = {
   noteStyle: {
     width: '100%',
-    height: '33vh',
+    height: '100px',
     boxShadow: 'inset 0px 0px 2px #95979b',
     fontWeight: 100,
     fontSize: '16px',
@@ -157,6 +199,7 @@ function mapStateToProps(state) {
   return {
     activeUser: state.center.activeUser,
     customerInfo: state.center.customerInfo,
+    notes: state.center.notes,
   }
 }
 export default connect(mapStateToProps)(RightPageInfo);

@@ -115,7 +115,13 @@ app.post('/send', (req, res) => {
       updates['/lastMessages/'+ receivingNum] = newMessageData;
       database.ref().update(updates);
     });
-
+    
+    var notesRef = database.ref('/notes');
+    notesRef.child(incomingNum).once("value", snapshot => {
+      if(!(snapshot.exists())) {
+        notesRef.child(incomingNum).set('');
+      }
+    });
   }
 }) 
 
@@ -156,6 +162,13 @@ app.post('/receive', (req, res)=> {
     updates['/lastMessages/'+ incomingNum] = newMessageData;
     database.ref().update(updates);
 
+  });
+
+  var notesRef = database.ref('/notes');
+  notesRef.child(incomingNum).once("value", snapshot => {
+    if(!(snapshot.exists())) {
+      notesRef.child(incomingNum).set('');
+    }
   });
 
   client.lookups.phoneNumbers(incomingNum)

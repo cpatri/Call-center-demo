@@ -5,6 +5,7 @@ export const UPDATE_LAST_MESSAGE = 'UPDATE_LAST_MESSAGE';
 export const UPDATE_MESSAGE_LIST = 'UPDATE_MESSAGE_LIST';
 export const SET_ACTIVE_USER = 'SET_ACTIVE_USER';
 export const SET_CUSTOMER_INFO = 'SET_CUSTOMER_INFO';
+export const UPDATE_NOTES = 'UPDATE_NOTES';
 
 export function selectUser(user) {
   // selecUser is an action creator, needs to return an action
@@ -43,6 +44,12 @@ export function setCustomerInfo(customerInfoList) {
   }
 }
 
+export function updateNotes(notesList) {
+  return {
+    type: UPDATE_NOTES,
+    payload: notesList,
+  }
+}
 
 const messagesRef = firebase.database().ref('messages');
 messagesRef.on('value', function(snapshot) {
@@ -59,4 +66,9 @@ lastMessagesRef.on('value', function(snapshot) {
 const customerInfoRef = firebase.database().ref('customerInfo');
 customerInfoRef.on('value', function(snapshot) {
   store.dispatch(setCustomerInfo(snapshot.val()));
+});
+
+const notesRef = firebase.database().ref('notes');
+notesRef.on('value', function(snapshot) {
+  store.dispatch(updateNotes(snapshot.val()));
 });

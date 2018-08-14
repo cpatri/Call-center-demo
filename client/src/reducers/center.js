@@ -2,13 +2,15 @@ import { USER_SELECTED,
         SEND_MESSAGES, 
         UPDATE_LAST_MESSAGE, 
         SET_ACTIVE_USER,
-        SET_CUSTOMER_INFO} from '../actions/center';
+        SET_CUSTOMER_INFO,
+        UPDATE_NOTES} from '../actions/center';
 
 const initState = {
   activeUser: '',
   customerInfo: {},
   messages: {},
   lastMessages: {},
+  notes: {},
   message: '',
 };
 
@@ -28,6 +30,8 @@ export default function (state = initState, action) {
       }
     case SET_CUSTOMER_INFO:
       return {...state, customerInfo: action.payload};
+    case UPDATE_NOTES:
+      return {...state, notes: action.payload};
   }
   return state;
 }
