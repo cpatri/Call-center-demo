@@ -61,63 +61,63 @@ class RightPageInfo extends Component {
         <Paper >
           <div id='paper' style={{overflowY:'auto', height: 'calc(100vh - 84px)'}}>
             <List>
-                <ListItem 
-                  disabled={true}
-                  style= {{ fontSize:'20px'}}
-                  primaryText="About this customer"
-                />
-                <Divider />
-                <ListItem 
-                  disabled={true}
-                  primaryText= {this.props.activeUser}
-                  leftAvatar= {<Avatar src={`https://api.adorable.io/avatars/255/${this.props.activeUser}@adorable.png`} />}
-                />
-                <Divider />
-                <ListItem
-                  disabled={true}
-                  primaryText={ 
-                    this.props.customerInfo[this.props.activeUser]? 
-                    `Name: ${this.props.customerInfo[this.props.activeUser].name}`:
-                     null}
-                />
-                <ListItem
-                  disabled={true}
-                  primaryText= {
-                    this.props.customerInfo[this.props.activeUser] ?
-                    `Country: ${this.props.customerInfo[this.props.activeUser].country}`:
-                    null }
-                />
-                <ListItem
-                  disabled={true}
-                  primaryText= {
-                    this.props.customerInfo[this.props.activeUser] ?
-                    `State: ${this.props.customerInfo[this.props.activeUser].state}`:
+              <ListItem 
+                disabled={true}
+                style= {{ fontSize:'20px'}}
+                primaryText="About this customer"
+              />
+              <Divider />
+              <ListItem
+                disabled={true}
+                primaryText={this.props.activeUser}
+                leftAvatar={<Avatar src={`https://api.adorable.io/avatars/255/${this.props.activeUser}@adorable.png`} />}
+              />
+              <Divider />
+              <ListItem
+                disabled={true}
+                primaryText={ 
+                  this.props.customerInfo[this.props.activeUser]? 
+                  `Name: ${this.props.customerInfo[this.props.activeUser].name}`:
                     null}
-                />
-                <ListItem
-                  disabled={true}
-                  primaryText= {this.props.customerInfo[this.props.activeUser] ?
-                    `City: ${this.props.customerInfo[this.props.activeUser].city}`:
-                    null}
-                />
-                <ListItem
-                  disabled={true}
-                  primaryText= {this.props.customerInfo[this.props.activeUser] ?
-                    `Caller type: ${this.props.customerInfo[this.props.activeUser].callerType}`:
-                    null}
-                />              
-                <Divider />
-                <ListItem 
-                  primaryText= {this.state.calling ?  "Hang up": "Call this customer" }
-                  leftIcon={this.state.calling? <RingVolume/>: <Phone/>}
-                  onClick= {() => {
-                    this.setState({calling: !this.state.calling});
-                    if (!this.state.calling)  {
-                      getToken(this.props.activeUser); 
-                    }
-                    else{
-                      device.disconnectAll();
-                    }
+              />
+              <ListItem
+                disabled={true}
+                primaryText={
+                  this.props.customerInfo[this.props.activeUser] ?
+                  `Country: ${this.props.customerInfo[this.props.activeUser].country}`:
+                  null}
+              />
+              <ListItem
+                disabled={true}
+                primaryText= {
+                  this.props.customerInfo[this.props.activeUser] ?
+                  `State: ${this.props.customerInfo[this.props.activeUser].state}`:
+                  null}
+              />
+              <ListItem
+                disabled={true}
+                primaryText= {this.props.customerInfo[this.props.activeUser] ?
+                  `City: ${this.props.customerInfo[this.props.activeUser].city}`:
+                  null}
+              />
+              <ListItem
+                disabled={true}
+                primaryText= {this.props.customerInfo[this.props.activeUser] ?
+                  `Caller type: ${this.props.customerInfo[this.props.activeUser].callerType}`:
+                  null}
+              />              
+              <Divider />
+              <ListItem 
+                primaryText= {this.state.calling ?  "Hang up": "Call this customer" }
+                leftIcon={this.state.calling? <RingVolume/>: <Phone/>}
+                onClick= {() => {
+                  this.setState({calling: !this.state.calling});
+                  if (!this.state.calling) {
+                    getToken(this.props.activeUser); 
+                  }
+                  else {
+                    device.disconnectAll();
+                  }
                   }}
                 />
                 <Divider />
@@ -173,15 +173,12 @@ const styles = {
     color: 'rgba(0,0,0, 0.87)',
     padding: '10px',
 
-
-
   },
   buttonStyle: {
     display: 'block',
     marginLeft: '2.5%',
-    width: '131.6px',
-    
-  }
+    width: '131.6px', 
+  },
 
 };
 function getToken(activeUser) {
