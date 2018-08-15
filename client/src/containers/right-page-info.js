@@ -105,9 +105,6 @@ class RightPageInfo extends Component {
     if (this.state.connection) {
       this.state.connection.accept();
       
-      //console.log('answerCallback()', this.state.answerCallback());
-      //this.setState({ answerCallback: false});
-      console.log('answerCall');
     }
   }
   render() {
