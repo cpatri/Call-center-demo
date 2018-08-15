@@ -11,54 +11,66 @@ import RingVolume from 'material-ui/svg-icons/communication/ring-volume';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { showModal } from '../actions/index';
-//import Modal from './modal';
 
 const muiTheme = getMuiTheme();
+
 const device = new Twilio.Device();
-
-function getToken(activeUser, handleOpen) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', '/api/token', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = () => {
-    if (xhr.readyState === xhr.DONE) {
-      if (xhr.status === 200 && activeUser) {
-         setUpConnection(activeUser, xhr.responseText, handleOpen);
-      }
-    }
-  };
-  xhr.send(null);
-}
-
-function setUpConnection(activeUser, token, handleOpen) {
-  device.setup(token);
-  device.on('ready', (device) => console.log('Twilio device is now ready for connections'));
-  device.on('error', (error) => console.log(error.message));
-  device.on('connect', (conn) =>console.log('successfully established call!'));
-  device.incoming((conn) => {
-    console.log('Incoming connection from ' + conn.parameters.From);
-    handleOpen(conn.parameters.From, conn);
-
-  });
-}
-
-function callUser(device, activeUser) {
-  const params = {
-    To: activeUser,
-  };
-  console.log('Calling ' + params.To + '...');
-  device.connect(params);
-}
 
 class RightPageInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {open: false, calling: false, notes: '', openedModal: false, incomingCaller: '', connection: false };
-
+    this.state = {open: false, open2: false, calling: false, notes: '', incomingCaller: '', connection: false };
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
+  getToken() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/api/token', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = () => {
+      if (xhr.readyState === xhr.DONE) {
+        if (xhr.status === 200 && this.props.activeUser) {
+           this.setUpConnection(xhr.responseText);
+        }
+      }
+    };
+    xhr.send(null);
+  }
+  setUpConnection(token) {
+    device.setup(token);
+    device.on('ready', (device) => console.log('Twilio device is now ready for connections'));
+    device.on('error', (error) => console.log(error.message));
+    device.on('connect', (conn) =>console.log('successfully established call!'));
+    device.on('incoming', (conn) => {
+      console.log('Incoming connection from ' + conn.parameters.From);
+      this.handleOpen(conn.parameters.From, conn);
+    });
+    device.on('cancel', (conn) => {
+      if (this.state.open) {
+        this.setState({ open: false });
+      }
+    });
+    device.on('disconnect', (conn) => {
+      console.log('call is disconnected');
+      console.log('this.state.calling before: ', this.state.calling);
+      if (this.state.open2) {
+        this.setState({ open2: false });
+      }
+      else if (this.state.calling) {
+        this.setState({ calling: false });
+        console.log('this.state.calling after: ', this.state.calling);
+      }
+    });
+  }
+
+  callUser(activeUser) {
+    const params = {
+      To: activeUser,
+    };
+    console.log('Calling ' + params.To + '...');
+    device.connect(params);
+  }
+
   onInputChange(event) {
     this.setState({
       notes: event.target.value,
@@ -88,24 +100,34 @@ class RightPageInfo extends Component {
     this.setState({ notes: '' });
   }
   handleOpen = (incomingCaller, connection) => {
-    this.setState({ open: true, incomingCaller, connection});
-
+    this.setState({ open: true, incomingCaller, connection });
   };
+  handleOpen2 = () => {
+    this.setState({ open2: true });
+  }
 
   handleClose = () => {
     if (this.state.connection) {
       this.state.connection.reject();
-      //this.setState({ rejectCallback: false });
       console.log('rejectCall');
     }
     this.setState({ open: false });
   };
 
+  handleClose2 = () => {
+    this.setState({ open2: false });
+  }
+
   handleAnswer = () => {
     if (this.state.connection) {
       this.state.connection.accept();
-      
+      this.handleOpen2();
     }
+    this.setState({ open: false });
+  }
+  handleEndCall = () => {
+    device.disconnectAll();
+    this.handleClose2();
   }
   render() {
     const { noteStyle, buttonStyle } = styles;
@@ -121,10 +143,17 @@ class RightPageInfo extends Component {
         onClick={this.handleAnswer}
       />,
     ];
+    const actions2 = [
+      <FlatButton
+        label="End the call"
+        secondary={true}
+        onClick={this.handleEndCall}
+      />,
+    ];
     if (!(this.props.activeUser)) {
       return null;
     }
-    getToken(this.props.activeUser, this.handleOpen);
+    this.getToken();
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Paper >
@@ -182,7 +211,7 @@ class RightPageInfo extends Component {
                 onClick={() => {
                   this.setState({ calling: !this.state.calling });
                   if (!this.state.calling) {
-                    callUser(device, this.props.activeUser);
+                    this.callUser(this.props.activeUser);
                   }
                   else {
                     device.disconnectAll();
@@ -226,6 +255,13 @@ class RightPageInfo extends Component {
               modal={true}
               open={this.state.open}
               onRequestClose={this.handleClose}
+            />
+            <Dialog
+              title={`Talking to: ${this.state.incomingCaller}`}
+              actions={actions2}
+              modal={true}
+              open={this.state.open2}
+              onRequestClose={this.handleClose2}
             />
           </div>
         </Paper>
