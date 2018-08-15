@@ -1,13 +1,11 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import DatePicker from 'material-ui/DatePicker';
 
 /**
- * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
+ * A modal dialog can only be closed by selecting one of the actions.
  */
-export default class DialogExampleDialogDatePicker extends React.Component {
+export default class innerModal extends React.Component {
   state = {
     open: false,
   };
@@ -23,29 +21,27 @@ export default class DialogExampleDialogDatePicker extends React.Component {
   render() {
     const actions = [
       <FlatButton
-        label="Decline"
+        label="Cancel"
         primary={true}
         onClick={this.handleClose}
       />,
       <FlatButton
-        label="Answer"
-        secondary={true}
+        label="Submit"
+        primary={true}
+        disabled={true}
         onClick={this.handleClose}
       />,
     ];
 
     return (
       <div>
-        <RaisedButton label="Open Modal" onClick={this.handleOpen} />
         <Dialog
-          title="+1xxxxxxxxx is calling"
+          title="Dialog With Actions"
           actions={actions}
-          modal={false}
+          modal={true}
           open={this.state.open}
-          onRequestClose={this.handleClose}
         >
-          Open a Date Picker dialog from within a dialog.
-          <DatePicker hintText="Date Picker" />
+          Only actions can close this dialog.
         </Dialog>
       </div>
     );
