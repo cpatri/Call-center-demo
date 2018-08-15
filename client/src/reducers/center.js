@@ -1,9 +1,11 @@
-import { USER_SELECTED, 
-        SEND_MESSAGES, 
-        UPDATE_LAST_MESSAGE, 
+import { USER_SELECTED,
+        SEND_MESSAGES,
+        UPDATE_LAST_MESSAGE,
         SET_ACTIVE_USER,
         SET_CUSTOMER_INFO,
-        UPDATE_NOTES} from '../actions/center';
+        UPDATE_NOTES,
+        SHOW_MODAL,
+      } from '../actions/center';
 
 const initState = {
   activeUser: '',
@@ -12,6 +14,7 @@ const initState = {
   lastMessages: {},
   notes: {},
   message: '',
+  showModal: 'true',
 };
 
 // ...state takes the information within the state
@@ -21,18 +24,20 @@ export default function (state = initState, action) {
     case USER_SELECTED:
       return { ...state, activeUser: action.payload };
     case SEND_MESSAGES:
-      return {...state, messages: action.payload};
+      return { ...state, messages: action.payload };
     case UPDATE_LAST_MESSAGE:
-      return {...state, lastMessages: action.payload};
+      return { ...state, lastMessages: action.payload };
     case SET_ACTIVE_USER:
-      if (state.activeUser == '') {
-        return {...state, activeUser: action.payload}
+      if (state.activeUser === '') {
+        return { ...state, activeUser: action.payload };
       }
       break;
     case SET_CUSTOMER_INFO:
-      return {...state, customerInfo: action.payload};
+      return { ...state, customerInfo: action.payload };
     case UPDATE_NOTES:
-      return {...state, notes: action.payload};
+      return { ...state, notes: action.payload };
+    case SHOW_MODAL:
+      return { ...state, showModal: action.payload };
   }
   return state;
 }

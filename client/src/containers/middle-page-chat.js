@@ -23,29 +23,33 @@ class MiddlePageChat extends Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-      <div id="container-with-input">
+        <div id="container-with-input">
           <div id="container-without-input" style={messageListStyle}>
-            <h3> {this.props.center.activeUser} </h3> 
+            <h3> {this.props.center.activeUser} </h3>
             <br />
-            <div> {Object.values(this.props.center.messages[this.props.center.activeUser]).map((messageInfo)=> 
-              (<div 
-                  style={messageInfo.number != TWILIO_NUMBER ? completeLeftMessageStyle : completeRightMessageStyle}
-                  key = {messageInfo.message + messageInfo.timestamp}
+            <div> {Object.values(this.props.center.messages[this.props.center.activeUser]).map(messageInfo =>
+              (<div
+                style={messageInfo.number !== TWILIO_NUMBER ?
+                  completeLeftMessageStyle : completeRightMessageStyle}
+                key={messageInfo.message + messageInfo.timestamp}
+              >
+                {messageInfo.number !== TWILIO_NUMBER ? <div className="avatar-message">
+                  <Avatar src={`https://api.adorable.io/avatars/255/${messageInfo.number}@adorable.png`} size={30} />
+                </div> : null }
+                <div style={messageInfo.number !== TWILIO_NUMBER ?
+                  leftMessageBubbleStyle :
+                  rightMessageBubbleStyle}
                 >
-                  {messageInfo.number != TWILIO_NUMBER ?  <div className="avatar-message">
-                    <Avatar src={`https://api.adorable.io/avatars/255/${messageInfo.number}@adorable.png`} size={30} />
-                  </div> : null }
-                  <div style={messageInfo.number != TWILIO_NUMBER? leftMessageBubbleStyle : rightMessageBubbleStyle}>
-                    {messageInfo.message}
-                    <br />
-                  </div>
+                  {messageInfo.message}
+                  <br />
+                </div>
               </div>),
               <br />,
               )}
             </div>
           </div>
-        <InputBar />
-      </div>
+          <InputBar />
+        </div>
       </MuiThemeProvider>
     );
   }

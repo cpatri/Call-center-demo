@@ -24,7 +24,7 @@ class InputBar extends Component {
       alert('Enter a message!');
     } else {
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'http://localhost:3003/send', true);
+      xhr.open('POST', '/api/send', true);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send(JSON.stringify({
         message: this.state.message,

@@ -6,6 +6,7 @@ export const UPDATE_MESSAGE_LIST = 'UPDATE_MESSAGE_LIST';
 export const SET_ACTIVE_USER = 'SET_ACTIVE_USER';
 export const SET_CUSTOMER_INFO = 'SET_CUSTOMER_INFO';
 export const UPDATE_NOTES = 'UPDATE_NOTES';
+//export const SHOW_MODAL = 'SHOW_MODAL';
 
 export function selectUser(user) {
   // selecUser is an action creator, needs to return an action
@@ -21,7 +22,7 @@ export function sendMessages(messageList) {
     type: SEND_MESSAGES,
     payload: messageList,
   };
-} 
+}
 
 export function updateLastMessage(lastMessageList) {
   return {
@@ -34,23 +35,29 @@ export function setActiveUser(activeUser) {
   return {
     type: SET_ACTIVE_USER,
     payload: activeUser,
-  }
+  };
 }
 
 export function setCustomerInfo(customerInfoList) {
-  console.log('customerInfoList: ', customerInfoList);
   return {
     type: SET_CUSTOMER_INFO,
     payload: customerInfoList,
-  }
+  };
 }
 
 export function updateNotes(notesList) {
   return {
     type: UPDATE_NOTES,
     payload: notesList,
-  }
+  };
 }
+
+/*export function showModal(tf) {
+  return {
+    type: SHOW_MODAL,
+    payload: tf,
+  };
+} */
 
 const messagesRef = firebase.database().ref('messages');
 messagesRef.on('value', function(snapshot) {

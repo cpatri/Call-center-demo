@@ -1,12 +1,12 @@
-import React from 'react';
+/*import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import { connect } from 'react-redux';
 /**
  * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
  */
-export default class Modal extends React.Component {
+/*class Modal extends React.Component {
   state = {
     open: false,
   };
@@ -19,6 +19,9 @@ export default class Modal extends React.Component {
     this.setState({ open: false });
   };
 
+  if (this.props.showModal === 'true') {
+    this.handleOpen();
+  }
   render() {
     const actions = [
       <FlatButton
@@ -35,7 +38,7 @@ export default class Modal extends React.Component {
 
     return (
       <div>
-        <RaisedButton label="Open Modal" onClick={this.handleOpen} />
+        
         <Dialog
           title="+1xxxxxxxxx is calling"
           actions={actions}
@@ -47,3 +50,10 @@ export default class Modal extends React.Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    showModal: state.center.showModal,
+  };
+}
+
+export default connect(mapStateToProps)(Modal); */

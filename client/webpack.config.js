@@ -37,6 +37,14 @@ const config = {
   devServer: {
     historyApiFallback: true,
     contentBase: './',
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3003',
+        pathRewrite: {
+          '^/api' : '',
+        },
+      },
+    },
   },
   plugins: [
     new ExtractTextPlugin('style.css'),

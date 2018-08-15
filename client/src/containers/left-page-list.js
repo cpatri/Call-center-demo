@@ -61,34 +61,31 @@ class LeftPageList extends Component {
         value={index}
         leftAvatar={
           <Avatar 
-            src={`https://api.adorable.io/avatars/255/${ phoneNum }@adorable.png`}
+            src={`https://api.adorable.io/avatars/255/${phoneNum}@adorable.png`}
             size={30}
           />
         }
         key={phoneNum}
         primaryText={phoneNum}
-        secondaryText= {this.props.lastMessages[phoneNum].number == TWILIO_NUMBER ?
-          `You: ${this.props.lastMessages[phoneNum].message}` : this.props.lastMessages[phoneNum].message }
+        secondaryText={this.props.lastMessages[phoneNum].number === TWILIO_NUMBER ?
+          `You: ${this.props.lastMessages[phoneNum].message}` : this.props.lastMessages[phoneNum].message}
         secondaryTextLines={2}
         onClick={() => this.props.selectUser(phoneNum)}
-      />    
+      />
     ));
-
   }
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-          <Paper  style={{maxHeight: '100vh', overflow: 'auto'}}>
-            <SelectableList defaultValue={0} >
-              {this.renderList()}
-            </SelectableList>
-          </Paper>
+        <Paper style={{ maxHeight: '100vh', overflow: 'auto' }}>
+          <SelectableList defaultValue={0} >
+            {this.renderList()}
+          </SelectableList>
+        </Paper>
       </MuiThemeProvider>
     );
   }
 }
-
-
 
 function mapStateToProps(state) {
   return {
@@ -96,5 +93,4 @@ function mapStateToProps(state) {
   };
 }
 
-
-export default connect(mapStateToProps, {selectUser})(LeftPageList);
+export default connect(mapStateToProps, { selectUser })(LeftPageList);

@@ -4,18 +4,57 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Phone from 'material-ui/svg-icons/communication/phone';
 import RingVolume from 'material-ui/svg-icons/communication/ring-volume';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import { showModal } from '../actions/index';
+//import Modal from './modal';
 
 const muiTheme = getMuiTheme();
 const device = new Twilio.Device();
+
+function getToken(activeUser, handleOpen) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', '/api/token', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = () => {
+    if (xhr.readyState === xhr.DONE) {
+      if (xhr.status === 200 && activeUser) {
+         setUpConnection(activeUser, xhr.responseText, handleOpen);
+      }
+    }
+  };
+  xhr.send(null);
+}
+
+function setUpConnection(activeUser, token, handleOpen) {
+  device.setup(token);
+  device.on('ready', (device) => console.log('Twilio device is now ready for connections'));
+  device.on('error', (error) => console.log(error.message));
+  device.on('connect', (conn) =>console.log('successfully established call!'));
+  device.incoming((conn) => {
+    console.log('Incoming connection from ' + conn.parameters.From);
+    handleOpen(conn.parameters.From, conn);
+
+  });
+}
+
+function callUser(device, activeUser) {
+  const params = {
+    To: activeUser,
+  };
+  console.log('Calling ' + params.To + '...');
+  device.connect(params);
+}
+
 class RightPageInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {calling: false, notes: ''};
+    this.state = {open: false, calling: false, notes: '', openedModal: false, incomingCaller: '', connection: false };
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -27,43 +66,76 @@ class RightPageInfo extends Component {
   }
   onFormSubmit(event) {
     event.preventDefault();
-      //store the notes into firebase under the active user
-      const notesRef = firebase.database().ref('/notes');
-      notesRef.child(this.props.activeUser).once("value", snapshot => {
-        var newNotesInfo = {
-          notes: this.state.notes,
-        }
-        if(!snapshot.exists()) {
-          notesRef.child(this.props.activeUser).set(newNotesInfo);
-          this.updateState();
-        }
-        else {
-          var updates = {};
-          updates['/notes/'+ this.props.activeUser] = newNotesInfo;
-          firebase.database().ref().update(updates);
-          this.updateState();
-        }
-      });
-
-  }
-  updateState() {
-    this.setState({
-      notes: '',
+      // store the notes into firebase under the active user
+    const notesRef = firebase.database().ref('/notes');
+    notesRef.child(this.props.activeUser).once('value', (snapshot) => {
+      const newNotesInfo = {
+        notes: this.state.notes,
+      };
+      if (!snapshot.exists()) {
+        notesRef.child(this.props.activeUser).set(newNotesInfo);
+        this.updateState();
+      }
+      else {
+        const updates = {};
+        updates['/notes/'+ this.props.activeUser] = newNotesInfo;
+        firebase.database().ref().update(updates);
+        this.updateState();
+      }
     });
   }
+  updateState() {
+    this.setState({ notes: '' });
+  }
+  handleOpen = (incomingCaller, connection) => {
+    this.setState({ open: true, incomingCaller, connection});
+
+  };
+
+  handleClose = () => {
+    if (this.state.connection) {
+      this.state.connection.reject();
+      //this.setState({ rejectCallback: false });
+      console.log('rejectCall');
+    }
+    this.setState({ open: false });
+  };
+
+  handleAnswer = () => {
+    if (this.state.connection) {
+      this.state.connection.accept();
+      
+      //console.log('answerCallback()', this.state.answerCallback());
+      //this.setState({ answerCallback: false});
+      console.log('answerCall');
+    }
+  }
   render() {
-    const { noteStyle, buttonStyle} = styles;
-    if (!(this.props.activeUser)){
+    const { noteStyle, buttonStyle } = styles;
+    const actions = [
+      <FlatButton
+        label="Decline"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Answer"
+        secondary={true}
+        onClick={this.handleAnswer}
+      />,
+    ];
+    if (!(this.props.activeUser)) {
       return null;
     }
+    getToken(this.props.activeUser, this.handleOpen);
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Paper >
-          <div id='paper' style={{overflowY:'auto', height: 'calc(100vh - 84px)'}}>
+          <div id='paper' style={{ overflowY: 'auto', height: 'calc(100vh - 84px)' }}>
             <List>
               <ListItem 
                 disabled={true}
-                style= {{ fontSize:'20px'}}
+                style={{ fontSize: '20px' }}
                 primaryText="About this customer"
               />
               <Divider />
@@ -76,49 +148,49 @@ class RightPageInfo extends Component {
               <ListItem
                 disabled={true}
                 primaryText={ 
-                  this.props.customerInfo[this.props.activeUser]? 
-                  `Name: ${this.props.customerInfo[this.props.activeUser].name}`:
+                  this.props.customerInfo[this.props.activeUser] ?
+                  `Name: ${this.props.customerInfo[this.props.activeUser].name}` :
                     null}
               />
               <ListItem
                 disabled={true}
                 primaryText={
                   this.props.customerInfo[this.props.activeUser] ?
-                  `Country: ${this.props.customerInfo[this.props.activeUser].country}`:
+                  `Country: ${this.props.customerInfo[this.props.activeUser].country}` :
                   null}
               />
               <ListItem
                 disabled={true}
                 primaryText= {
                   this.props.customerInfo[this.props.activeUser] ?
-                  `State: ${this.props.customerInfo[this.props.activeUser].state}`:
+                  `State: ${this.props.customerInfo[this.props.activeUser].state}` :
                   null}
               />
               <ListItem
                 disabled={true}
                 primaryText= {this.props.customerInfo[this.props.activeUser] ?
-                  `City: ${this.props.customerInfo[this.props.activeUser].city}`:
+                  `City: ${this.props.customerInfo[this.props.activeUser].city}` :
                   null}
               />
               <ListItem
                 disabled={true}
                 primaryText= {this.props.customerInfo[this.props.activeUser] ?
-                  `Caller type: ${this.props.customerInfo[this.props.activeUser].callerType}`:
+                  `Caller type: ${this.props.customerInfo[this.props.activeUser].callerType}` :
                   null}
               />              
               <Divider />
               <ListItem 
-                primaryText= {this.state.calling ?  "Hang up": "Call this customer" }
-                leftIcon={this.state.calling? <RingVolume/>: <Phone/>}
-                onClick= {() => {
-                  this.setState({calling: !this.state.calling});
+                primaryText= {this.state.calling ?  'Hang up' : 'Call this customer'}
+                leftIcon={this.state.calling ? <RingVolume /> : <Phone />}
+                onClick={() => {
+                  this.setState({ calling: !this.state.calling });
                   if (!this.state.calling) {
-                    getToken(this.props.activeUser); 
+                    callUser(device, this.props.activeUser);
                   }
                   else {
                     device.disconnectAll();
                   }
-                  }}
+                }}
                 />
                 <Divider />
                 <ListItem 
@@ -140,7 +212,7 @@ class RightPageInfo extends Component {
                   onChange={this.onInputChange}
                   style={noteStyle}
                 />
-                <br/>
+                <br />
                 <RaisedButton
                   label="Update Notes"
                   className="note-submit"
@@ -148,14 +220,20 @@ class RightPageInfo extends Component {
                   onClick={this.onFormSubmit}
                   primary
                 />
-                <br/>
+                <br />
               </form>
             </div>
-          </div>   
+            <Dialog
+              title={`${this.state.incomingCaller} is calling`}
+              actions={actions}
+              modal={true}
+              open={this.state.open}
+              onRequestClose={this.handleClose}
+            />
+          </div>
         </Paper>
-      </MuiThemeProvider>
-    )
-
+      </MuiThemeProvider> 
+    );
   }
 }
 
@@ -177,46 +255,17 @@ const styles = {
   buttonStyle: {
     display: 'block',
     marginLeft: '2.5%',
-    width: '131.6px', 
+    width: '131.6px',
   },
 
 };
-function getToken(activeUser) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'http://localhost:3003/token', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = () => {
-    if (xhr.readyState === xhr.DONE) {
-      if (xhr.status === 200 && activeUser) {
-         setUpCall(activeUser, xhr.responseText);
-;      }
-    }
-  }
-  xhr.send(null);  
-}
-
-function setUpCall(activeUser, token) {
-  device.setup(token);
-  device.on('ready', (device) => console.log('Twilio device is now ready for connections'));
-  device.on('error', (error) => console.log(error.message));
-  device.on('connect', (conn) =>console.log('successfully established call!'));
-  callUser(device, activeUser);
-
-}
-function callUser(device, activeUser) {
-  var params = {
-    To: activeUser,
-  }
-  console.log('Calling ' + params.To + '...');
-  device.connect(params); 
-}
-
 
 function mapStateToProps(state) {
+  //console.log(state);
   return {
     activeUser: state.center.activeUser,
     customerInfo: state.center.customerInfo,
     notes: state.center.notes,
-  }
+  };
 }
 export default connect(mapStateToProps)(RightPageInfo);

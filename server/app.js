@@ -158,6 +158,12 @@ app.post('/receive', (req, res)=> {
 
   });
 
+  var notesRef = database.ref('/notes');
+  notesRef.child(incomingNum).once('value', snapshot => {
+    if(!(snapshot.exists())) {
+      notesRef.child(incomingNum).set('');
+    }
+  })
 
 
   client.lookups.phoneNumbers(incomingNum)
@@ -201,7 +207,9 @@ app.get('/token', (req, res) => {
   capability.addScope(
     new ClientCapability.OutgoingClientScope({ applicationSid: process.env.TWILIO_TWIML_APP_SID})
   );
+  capability.addScope(new ClientCapability.IncomingClientScope('caroline'));
   const token = capability.toJwt();
+
   res.set('Content-Type', 'application/jwt');
   res.send(token);
 });
