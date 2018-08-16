@@ -38,6 +38,8 @@ export default function (state = initState, action) {
       return { ...state, notes: action.payload };
     case SHOW_MODAL:
       return { ...state, showModal: action.payload };
+    default:
+      return state;
   }
   return state;
 }

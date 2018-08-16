@@ -34,7 +34,7 @@ function wrapState(ComposedComponent) {
 
     render() {
       return (
-        <ComposedComponent 
+        <ComposedComponent
           value={this.state.selectedIndex}
           onChange={this.handleRequestChange}
         >
@@ -60,7 +60,7 @@ class LeftPageList extends Component {
       <ListItem
         value={index}
         leftAvatar={
-          <Avatar 
+          <Avatar
             src={`https://api.adorable.io/avatars/255/${phoneNum}@adorable.png`}
             size={30}
           />

@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import { sendMessages } from '../actions';
@@ -23,13 +23,13 @@ class InputBar extends Component {
     if (!this.state.message) {
       alert('Enter a message!');
     } else {
-      var xhr = new XMLHttpRequest();
+      const xhr = new XMLHttpRequest();
       xhr.open('POST', '/api/send', true);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send(JSON.stringify({
         message: this.state.message,
         to: this.props.activeUser,
-      }));  
+      }));
 
       this.setState({
         message: '',
@@ -86,12 +86,9 @@ const styles = {
   },
 };
 
-
-
-
 function mapStateToProps(state) {
-  return{
+  return {
     activeUser: state.center.activeUser,
-  }
+  };
 }
 export default connect(mapStateToProps, { sendMessages })(InputBar);

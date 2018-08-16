@@ -1,4 +1,5 @@
 import { store } from '../components/layout';
+
 export const USER_SELECTED = 'USER_SELECTED';
 export const SEND_MESSAGES = 'SEND_MESSAGES';
 export const UPDATE_LAST_MESSAGE = 'UPDATE_LAST_MESSAGE';
@@ -6,7 +7,6 @@ export const UPDATE_MESSAGE_LIST = 'UPDATE_MESSAGE_LIST';
 export const SET_ACTIVE_USER = 'SET_ACTIVE_USER';
 export const SET_CUSTOMER_INFO = 'SET_CUSTOMER_INFO';
 export const UPDATE_NOTES = 'UPDATE_NOTES';
-//export const SHOW_MODAL = 'SHOW_MODAL';
 
 export function selectUser(user) {
   // selecUser is an action creator, needs to return an action
@@ -52,12 +52,6 @@ export function updateNotes(notesList) {
   };
 }
 
-/*export function showModal(tf) {
-  return {
-    type: SHOW_MODAL,
-    payload: tf,
-  };
-} */
 
 const messagesRef = firebase.database().ref('messages');
 messagesRef.on('value', function(snapshot) {

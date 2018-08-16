@@ -15,7 +15,8 @@ import RightPageInfo from '../containers/right-page-info';
 window.React = React;
 window.ReactDOM = ReactDOM;
 
-const createStoreWithMiddleWare = applyMiddleware(ReduxThunk, ReduxPromise, createLogger())(createStore);
+const createStoreWithMiddleWare =
+applyMiddleware(ReduxThunk, ReduxPromise, createLogger())(createStore);
 
 export const store = createStoreWithMiddleWare(reducers);
 

@@ -39,9 +39,9 @@ class RightPageInfo extends Component {
       if (!snapshot.exists()) {
         notesRef.child(this.props.activeUser).set(newNotesInfo);
         this.updateState();
-      }      else {
+      } else {
         const updates = {};
-        updates[`/notes/${ this.props.activeUser}`] = newNotesInfo;
+        updates[`/notes/${this.props.activeUser}`] = newNotesInfo;
         firebase.database().ref().update(updates);
         this.updateState();
       }
