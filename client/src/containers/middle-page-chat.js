@@ -10,6 +10,12 @@ import { TWILIO_NUMBER } from '../config/index';
 const muiTheme = getMuiTheme();
 
 class MiddlePageChat extends Component {
+  componentDidUpdate() {
+    const messageListContainer = document.getElementById("container-without-input");
+    if (messageListContainer) {
+      messageListContainer.scrollTop = messageListContainer.scrollHeight;
+    }
+  }
   render() {
     const { messageListStyle,
             leftMessageBubbleStyle,
