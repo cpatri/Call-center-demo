@@ -19,58 +19,10 @@ const device = new Twilio.Device();
 class RightPageInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {open: false, open2: false, calling: false, notes: '', incomingCaller: '', connection: false };
+    this.state = { open: false, open2: false, calling: false, notes: '', incomingCaller: '', connection: false };
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
-  getToken() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/api/token', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = () => {
-      if (xhr.readyState === xhr.DONE) {
-        if (xhr.status === 200 && this.props.activeUser) {
-           this.setUpConnection(xhr.responseText);
-        }
-      }
-    };
-    xhr.send(null);
-  }
-  setUpConnection(token) {
-    device.setup(token);
-    device.on('ready', (device) => console.log('Twilio device is now ready for connections'));
-    device.on('error', (error) => console.log(error.message));
-    device.on('connect', (conn) =>console.log('successfully established call!'));
-    device.on('incoming', (conn) => {
-      console.log('Incoming connection from ' + conn.parameters.From);
-      this.handleOpen(conn.parameters.From, conn);
-    });
-    device.on('cancel', (conn) => {
-      if (this.state.open) {
-        this.setState({ open: false });
-      }
-    });
-    device.on('disconnect', (conn) => {
-      console.log('call is disconnected');
-      console.log('this.state.calling before: ', this.state.calling);
-      if (this.state.open2) {
-        this.setState({ open2: false });
-      }
-      else if (this.state.calling) {
-        this.setState({ calling: false });
-        console.log('this.state.calling after: ', this.state.calling);
-      }
-    });
-  }
-
-  callUser(activeUser) {
-    const params = {
-      To: activeUser,
-    };
-    console.log('Calling ' + params.To + '...');
-    device.connect(params);
-  }
-
   onInputChange(event) {
     this.setState({
       notes: event.target.value,
@@ -87,14 +39,56 @@ class RightPageInfo extends Component {
       if (!snapshot.exists()) {
         notesRef.child(this.props.activeUser).set(newNotesInfo);
         this.updateState();
-      }
-      else {
+      }      else {
         const updates = {};
-        updates['/notes/'+ this.props.activeUser] = newNotesInfo;
+        updates[`/notes/${ this.props.activeUser}`] = newNotesInfo;
         firebase.database().ref().update(updates);
         this.updateState();
       }
     });
+  }
+  getToken() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/api/token', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = () => {
+      if (xhr.readyState === xhr.DONE) {
+        if (xhr.status === 200 && this.props.activeUser) {
+          this.setUpConnection(xhr.responseText);
+        }
+      }
+    };
+    xhr.send(null);
+  }
+  setUpConnection(token) {
+    device.setup(token);
+    device.on('ready', () => console.log('Twilio device is now ready for connections'));
+    device.on('error', error => console.log(error.message));
+    device.on('connect', () => console.log('successfully established call!'));
+    device.on('incoming', (conn) => {
+      console.log(`'Incoming connection from  ${conn.parameters.From}`);
+      this.handleOpen(conn.parameters.From, conn);
+    });
+    device.on('cancel', () => {
+      if (this.state.open) {
+        this.setState({ open: false });
+      }
+    });
+    device.on('disconnect', () => {
+      if (this.state.open2) {
+        this.setState({ open2: false });
+      } else if (this.state.calling) {
+        this.setState({ calling: false });
+      }
+    });
+  }
+
+  callUser() {
+    const params = {
+      To: this.props.activeUser,
+    };
+    console.log(`Calling  ${params.To}...`);
+    device.connect(params);
   }
   updateState() {
     this.setState({ notes: '' });
@@ -109,7 +103,6 @@ class RightPageInfo extends Component {
   handleClose = () => {
     if (this.state.connection) {
       this.state.connection.reject();
-      console.log('rejectCall');
     }
     this.setState({ open: false });
   };
@@ -134,19 +127,19 @@ class RightPageInfo extends Component {
     const actions = [
       <FlatButton
         label="Decline"
-        primary={true}
+        primary
         onClick={this.handleClose}
       />,
       <FlatButton
         label="Answer"
-        secondary={true}
+        secondary
         onClick={this.handleAnswer}
       />,
     ];
     const actions2 = [
       <FlatButton
         label="End the call"
-        secondary={true}
+        secondary
         onClick={this.handleEndCall}
       />,
     ];
@@ -157,82 +150,82 @@ class RightPageInfo extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Paper >
-          <div id='paper' style={{ overflowY: 'auto', height: 'calc(100vh - 84px)' }}>
+          <div id="paper" style={{ overflowY: 'auto', height: 'calc(100vh - 84px)' }}>
             <List>
-              <ListItem 
-                disabled={true}
+              <ListItem
+                disabled
                 style={{ fontSize: '20px' }}
                 primaryText="About this customer"
               />
               <Divider />
               <ListItem
-                disabled={true}
+                disabled
                 primaryText={this.props.activeUser}
                 leftAvatar={<Avatar src={`https://api.adorable.io/avatars/255/${this.props.activeUser}@adorable.png`} />}
               />
               <Divider />
               <ListItem
-                disabled={true}
-                primaryText={ 
+                disabled
+                primaryText={
                   this.props.customerInfo[this.props.activeUser] ?
                   `Name: ${this.props.customerInfo[this.props.activeUser].name}` :
                     null}
               />
               <ListItem
-                disabled={true}
+                disabled
                 primaryText={
                   this.props.customerInfo[this.props.activeUser] ?
                   `Country: ${this.props.customerInfo[this.props.activeUser].country}` :
                   null}
               />
               <ListItem
-                disabled={true}
-                primaryText= {
+                disabled
+                primaryText={
                   this.props.customerInfo[this.props.activeUser] ?
                   `State: ${this.props.customerInfo[this.props.activeUser].state}` :
                   null}
               />
               <ListItem
-                disabled={true}
-                primaryText= {this.props.customerInfo[this.props.activeUser] ?
+                disabled
+                primaryText={this.props.customerInfo[this.props.activeUser] ?
                   `City: ${this.props.customerInfo[this.props.activeUser].city}` :
                   null}
               />
               <ListItem
-                disabled={true}
-                primaryText= {this.props.customerInfo[this.props.activeUser] ?
+                disabled
+                primaryText={this.props.customerInfo[this.props.activeUser] ?
                   `Caller type: ${this.props.customerInfo[this.props.activeUser].callerType}` :
                   null}
-              />              
+              />
               <Divider />
-              <ListItem 
-                primaryText= {this.state.calling ?  'Hang up' : 'Call this customer'}
+              <ListItem
+                primaryText={this.state.calling ? 'Hang up' : 'Call this customer'}
                 leftIcon={this.state.calling ? <RingVolume /> : <Phone />}
                 onClick={() => {
                   this.setState({ calling: !this.state.calling });
                   if (!this.state.calling) {
-                    this.callUser(this.props.activeUser);
-                  }
-                  else {
+                    this.callUser();
+                  } else {
                     device.disconnectAll();
                   }
                 }}
-                />
-                <Divider />
-                <ListItem 
-                  disabled={true}
-                  primaryText='Quick notes:'
-                />
-                <ListItem 
-                  disabled={true}
-                  primaryText={this.props.notes ? this.props.notes[this.props.activeUser].notes : null}
-                />
+              />
+              <Divider />
+              <ListItem
+                disabled
+                primaryText="Quick notes:"
+              />
+              <ListItem
+                disabled
+                primaryText={this.props.notes ?
+                  this.props.notes[this.props.activeUser].notes : null}
+              />
             </List>
-            <div id='notes-container'>
+            <div id="notes-container">
               <form >
                 <textarea
-                  rows='4'
-                  display='block'
+                  rows="4"
+                  display="block"
                   placeholder="Type notes here"
                   type="text"
                   onChange={this.onInputChange}
@@ -252,20 +245,20 @@ class RightPageInfo extends Component {
             <Dialog
               title={`${this.state.incomingCaller} is calling`}
               actions={actions}
-              modal={true}
+              modal
               open={this.state.open}
               onRequestClose={this.handleClose}
             />
             <Dialog
               title={`Talking to: ${this.state.incomingCaller}`}
               actions={actions2}
-              modal={true}
+              modal
               open={this.state.open2}
               onRequestClose={this.handleClose2}
             />
           </div>
         </Paper>
-      </MuiThemeProvider> 
+      </MuiThemeProvider>
     );
   }
 }
@@ -294,7 +287,6 @@ const styles = {
 };
 
 function mapStateToProps(state) {
-  //console.log(state);
   return {
     activeUser: state.center.activeUser,
     customerInfo: state.center.customerInfo,
