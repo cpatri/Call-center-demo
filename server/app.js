@@ -10,8 +10,6 @@ var AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 var TWILIO_TWIML_APP_SID = process.env.TWILIO_TWIML_APP_SID;
 
 
-
-
 require('dotenv').load();
 
 const twilio = require('twilio');
