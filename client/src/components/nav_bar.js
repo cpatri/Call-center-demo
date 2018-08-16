@@ -9,8 +9,9 @@ import Layers from 'material-ui/svg-icons/maps/layers';
 import Notifications from 'material-ui/svg-icons/social/notifications';
 import Book from 'material-ui/svg-icons/action/book';
 import Visibility from 'material-ui/svg-icons/action/visibility';
-import GoldenLayoutWrapper from './layout';
 import Avatar from 'material-ui/Avatar';
+import GoldenLayoutWrapper from './layout';
+
 
 class NavBar extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class NavBar extends Component {
           }
           iconElementRight={
             <Avatar
-              src='https://avatars2.githubusercontent.com/u/19522672?s=460&v=4'
+              src="https://avatars2.githubusercontent.com/u/19522672?s=460&v=4"
               size={45}
             />
           }

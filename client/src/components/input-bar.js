@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessages } from '../actions';
+
 
 class InputBar extends Component {
   constructor(props) {
@@ -84,6 +86,13 @@ const styles = {
     position: 'relative',
     order: 1,
   },
+};
+InputBar.propTypes = {
+  activeUser: PropTypes.string,
+};
+
+InputBar.defaultProps = {
+  activeUser: '',
 };
 
 function mapStateToProps(state) {

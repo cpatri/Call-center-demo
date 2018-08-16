@@ -34,7 +34,14 @@ function wrapComponent(Component, store) {
 }
 
 class GoldenLayoutWrapper extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { width: '0px', height: '0px'};
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
     // build basic golden-layout config
     const config = {
       content: [{
@@ -67,10 +74,24 @@ class GoldenLayoutWrapper extends Component {
 
     layout.init();
   }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  updateWindowDimensions() {
+    this.setState({ width: `${window.innerWidth}px`, height: 'calc(window.innerHeight - 64px)' });
+  }
 
   render() {
+    console.log('this.state.width', this.state.width);
+    const styles = {
+      wrapperStyle: {
+        width: this.state.width,
+        height: 'calc(100vh - 64px)',
+      },
+    };
+    const { wrapperStyle } = styles;
     return (
-      <div id='golden-layout-wrapper' style={{ height: 'calc(100vh - 64px)'}} ref={input => (this.layout = input)} />
+      <div id="golden-layout-wrapper" style={wrapperStyle} ref={input => (this.layout = input)} />
     );
   }
 }

@@ -23,6 +23,7 @@ class RightPageInfo extends Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
+
   onInputChange(event) {
     this.setState({
       notes: event.target.value,
@@ -62,9 +63,9 @@ class RightPageInfo extends Component {
   }
   setUpConnection(token) {
     device.setup(token);
-    device.on('ready', () => console.log('Twilio device is now ready for connections'));
+    // device.on('ready', () => console.log('Twilio device is now ready for connections'));
     device.on('error', error => console.log(error.message));
-    device.on('connect', () => console.log('successfully established call!'));
+    // device.on('connect', () => console.log('successfully established call!'));
     device.on('incoming', (conn) => {
       console.log(`'Incoming connection from  ${conn.parameters.From}`);
       this.handleOpen(conn.parameters.From, conn);
@@ -122,6 +123,7 @@ class RightPageInfo extends Component {
     device.disconnectAll();
     this.handleClose2();
   }
+
   render() {
     const { noteStyle, buttonStyle } = styles;
     const actions = [

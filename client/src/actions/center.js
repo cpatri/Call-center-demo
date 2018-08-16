@@ -54,22 +54,22 @@ export function updateNotes(notesList) {
 
 
 const messagesRef = firebase.database().ref('messages');
-messagesRef.on('value', function(snapshot) {
+messagesRef.on('value', (snapshot) => {
   store.dispatch(sendMessages(snapshot.val()));
 });
 
 const lastMessagesRef = firebase.database().ref('lastMessages');
-lastMessagesRef.on('value', function(snapshot) {
+lastMessagesRef.on('value', (snapshot) => {
   store.dispatch(updateLastMessage(snapshot.val()));
-  store.dispatch(setActiveUser(Object.keys(snapshot.val())[0]))
+  store.dispatch(setActiveUser(Object.keys(snapshot.val())[0]));
 });
 
 const customerInfoRef = firebase.database().ref('customerInfo');
-customerInfoRef.on('value', function(snapshot) {
+customerInfoRef.on('value', (snapshot) => {
   store.dispatch(setCustomerInfo(snapshot.val()));
 });
 
 const notesRef = firebase.database().ref('notes');
-notesRef.on('value', function(snapshot) {
+notesRef.on('value', (snapshot) => {
   store.dispatch(updateNotes(snapshot.val()));
 });

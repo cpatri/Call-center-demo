@@ -1,4 +1,4 @@
-/*import { SAY_HELLO } from './types';
+/* import { SAY_HELLO } from './types';
 
 export const sayHello = message => (dispatch) => {
   dispatch({

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Avatar from 'material-ui/Avatar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import Paper from 'material-ui/Paper';
 import InputBar from '../components/input-bar';
 import { selectUser } from '../actions';
 import { TWILIO_NUMBER } from '../config/index';
@@ -11,7 +12,7 @@ const muiTheme = getMuiTheme();
 
 class MiddlePageChat extends Component {
   componentDidUpdate() {
-    const messageListContainer = document.getElementById("container-without-input");
+    const messageListContainer = document.getElementById('container-without-input');
     if (messageListContainer) {
       messageListContainer.scrollTop = messageListContainer.scrollHeight;
     }
@@ -21,7 +22,9 @@ class MiddlePageChat extends Component {
             leftMessageBubbleStyle,
             rightMessageBubbleStyle,
             completeLeftMessageStyle,
-            completeRightMessageStyle } = styles;
+            completeRightMessageStyle,
+            headerStyle,
+           } = styles;
 
     if (!this.props.center.activeUser) {
       return null;
@@ -30,8 +33,10 @@ class MiddlePageChat extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div id="container-with-input">
+          <Paper style={headerStyle}>
+            <b>{this.props.center.activeUser} </b>
+          </Paper>
           <div id="container-without-input" style={messageListStyle}>
-            <h3> {this.props.center.activeUser} </h3>
             <br />
             <div> {Object.values(this.props.center.messages[this.props.center.activeUser]).map(messageInfo =>
               (<div
@@ -70,6 +75,12 @@ function mapStateToProps(state) {
 }
 
 const styles = {
+  headerStyle: {
+    textAlign: 'center',
+    height: '46px',
+    verticalAlign: 'middle',
+    lineHeight: '46px',
+  },
   messageListStyle: {
     position: 'relative',
     height: '100vh',

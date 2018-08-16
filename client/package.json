@@ -13,6 +13,7 @@
     "@material-ui/core": "^1.3.1",
     "@material-ui/icons": "^1.1.0",
     "axios": "^0.16.2",
+    "dotenv-safe": "^6.0.0",
     "firebase": "^5.3.1",
     "golden-layout": "^1.5.9",
     "history": "^4.6.3",
@@ -30,6 +31,7 @@
     "webpack": "^2.6.1"
   },
   "devDependencies": {
+    "@types/prop-types": "^15.5.5",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",

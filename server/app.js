@@ -20,18 +20,16 @@ const VoiceResponse = twilio.twiml.VoiceResponse;
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 const app = express();
-// phoneMessages cont;ains the entire list of messages and phone numbers associated 
-var phoneMessages = {};
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyCctjM4-V60XuK387-ovoTE3UaOhiW-JoQ",
-  authDomain: "impekable-chat-project.firebaseapp.com",
-  databaseURL: "https://impekable-chat-project.firebaseio.com",
-  projectId: "impekable-chat-project",
-  storageBucket: "impekable-chat-project.appspot.com",
-  messagingSenderId: "724217898399"
-};
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DB_URL,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+}
 firebase.initializeApp(config);
 
 //reference to database service
@@ -48,7 +46,6 @@ app.use((req, res, next ) => {
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-
 
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'content-type');
