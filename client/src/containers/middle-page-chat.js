@@ -67,9 +67,12 @@ class MiddlePageChat extends Component {
     );
   }
 }
-MiddlePageChat.propTypes = {
-  center: PropTypes.shape,
-};
+/*MiddlePageChat.propTypes = {
+  center: PropTypes.shape({
+    activeUser: PropTypes.string,
+    customerInfo: PropTypes.objectOf()
+  }),
+}; */
 
 MiddlePageChat.defaultProps = {
   center: {},

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Avatar from 'material-ui/Avatar';
@@ -22,6 +23,7 @@ class RightPageInfo extends Component {
     this.state = { open: false, open2: false, calling: false, notes: '', incomingCaller: '', connection: false };
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   onInputChange(event) {
@@ -31,7 +33,31 @@ class RightPageInfo extends Component {
   }
   onFormSubmit(event) {
     event.preventDefault();
+
       // store the notes into firebase under the active user
+    const notesRef = firebase.database().ref('/notes');
+    notesRef.child(this.props.activeUser).once('value', (snapshot) => {
+      const newNotesInfo = {
+        notes: this.state.notes,
+      };
+      if (!snapshot.exists()) {
+        notesRef.child(this.props.activeUser).set(newNotesInfo);
+        this.updateState();
+      } else {
+        const updates = {};
+        updates[`/notes/${this.props.activeUser}`] = newNotesInfo;
+        firebase.database().ref().update(updates);
+        this.updateState();
+      }
+    });
+    const form = document.getElementById('notes-form');
+    form.reset();
+  }
+
+  onDelete(event) {
+    event.preventDefault();
+      // store the notes into firebase under the active user
+    this.setState({ notes: '' });
     const notesRef = firebase.database().ref('/notes');
     notesRef.child(this.props.activeUser).once('value', (snapshot) => {
       const newNotesInfo = {
@@ -63,9 +89,7 @@ class RightPageInfo extends Component {
   }
   setUpConnection(token) {
     device.setup(token);
-    // device.on('ready', () => console.log('Twilio device is now ready for connections'));
     device.on('error', error => console.log(error.message));
-    // device.on('connect', () => console.log('successfully established call!'));
     device.on('incoming', (conn) => {
       console.log(`'Incoming connection from  ${conn.parameters.From}`);
       this.handleOpen(conn.parameters.From, conn);
@@ -125,7 +149,7 @@ class RightPageInfo extends Component {
   }
 
   render() {
-    const { noteStyle, buttonStyle } = styles;
+    const { noteStyle, buttonsStyle, submitButtonStyle, deleteButtonStyle } = styles;
     const actions = [
       <FlatButton
         label="Decline"
@@ -224,7 +248,7 @@ class RightPageInfo extends Component {
               />
             </List>
             <div id="notes-container">
-              <form >
+              <form id="notes-form">
                 <textarea
                   rows="4"
                   display="block"
@@ -234,13 +258,22 @@ class RightPageInfo extends Component {
                   style={noteStyle}
                 />
                 <br />
-                <RaisedButton
-                  label="Update Notes"
-                  className="note-submit"
-                  style={buttonStyle}
-                  onClick={this.onFormSubmit}
-                  primary
-                />
+                <div id="buttons" style={buttonsStyle}>
+                  <RaisedButton
+                    label="Update Notes"
+                    className="note-submit"
+                    style={submitButtonStyle}
+                    onClick={this.onFormSubmit}
+                    primary
+                  />
+                  <RaisedButton
+                    label="Delete Notes"
+                    className="note-delete"
+                    style={deleteButtonStyle}
+                    onClick={this.onDelete}
+                    secondary
+                  />
+                </div>
                 <br />
               </form>
             </div>
@@ -264,6 +297,15 @@ class RightPageInfo extends Component {
     );
   }
 }
+RightPageInfo.propTypes = {
+  customerInfo: PropTypes.shape,
+  activeUser: PropTypes.string,
+};
+
+RightPageInfo.defaultProps = {
+  customerInfo: {},
+  activeUser: '',
+};
 
 const styles = {
   noteStyle: {
@@ -280,7 +322,15 @@ const styles = {
     padding: '10px',
 
   },
-  buttonStyle: {
+  buttonsStyle: {
+    display: 'flex',
+  },
+  submitButtonStyle: {
+    display: 'block',
+    marginLeft: '2.5%',
+    width: '131.6px',
+  },
+  deleteButtonStyle: {
     display: 'block',
     marginLeft: '2.5%',
     width: '131.6px',
