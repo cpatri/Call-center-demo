@@ -86,8 +86,15 @@ class LeftPageList extends Component {
     );
   }
 }
+
+const messagesShape = {
+  message: PropTypes.string,
+  number: PropTypes.string,
+  timestamp: PropTypes.number,
+};
+
 LeftPageList.propTypes = {
-  lastMessages: PropTypes.shape,
+  lastMessages: PropTypes.shape(messagesShape),
   selectUser: PropTypes.func,
 };
 

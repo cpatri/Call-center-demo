@@ -297,14 +297,17 @@ class RightPageInfo extends Component {
     );
   }
 }
+
 RightPageInfo.propTypes = {
-  customerInfo: PropTypes.shape,
+  customerInfo: PropTypes.objectOf(PropTypes.string),
   activeUser: PropTypes.string,
+  notes: PropTypes.objectOf(PropTypes.shape({ notes: PropTypes.string })),
 };
 
 RightPageInfo.defaultProps = {
   customerInfo: {},
   activeUser: '',
+  notes: {},
 };
 
 const styles = {
