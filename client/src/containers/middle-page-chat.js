@@ -107,7 +107,7 @@ const styles = {
     position: 'relative',
     height: '100vh',
     overflowY: 'scroll',
-    paddingBottom: '150px',
+    paddingBottom: '170px',
   },
   completeLeftMessageStyle: {
     display: 'flex',

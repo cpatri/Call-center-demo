@@ -9,6 +9,10 @@
     "browser": true,
     "node": true
   },
+  "globals": {
+    "firebase": true,
+    "Twilio": true
+  },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-underscore-dangle": [0],
