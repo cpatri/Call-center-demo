@@ -39,7 +39,8 @@ class MiddlePageChat extends Component {
           </Paper>
           <div id="container-without-input" style={messageListStyle}>
             <br />
-            <div> {Object.values(this.props.center.messages[this.props.center.activeUser]).map(messageInfo =>
+            <div> {Object.values(this.props.center.messages[this.props.center.activeUser]).map(
+              messageInfo =>
               (<div
                 style={messageInfo.number !== TWILIO_NUMBER ?
                   completeLeftMessageStyle : completeRightMessageStyle}
