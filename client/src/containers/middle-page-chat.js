@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Avatar from 'material-ui/Avatar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -65,6 +66,13 @@ class MiddlePageChat extends Component {
     );
   }
 }
+MiddlePageChat.propTypes = {
+  center: PropTypes.shape,
+};
+
+MiddlePageChat.defaultProps = {
+  center: {},
+};
 
 // Rule 1: Return an object, and I'll put all the properties and methods as props on your components
 function mapStateToProps(state) {
