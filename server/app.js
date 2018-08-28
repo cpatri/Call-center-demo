@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/send', (req, res) => {
-  let myNumber = '+15153258366';
+  let myNumber = process.env.TWILIO_CALLER_ID;
 
   client.messages.create({
       body: req.body.message,
