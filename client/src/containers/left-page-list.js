@@ -8,42 +8,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { selectUser } from '../actions/index';
 import { TWILIO_NUMBER } from '../config/index';
+import wrapState from '../components/wrap-state';
 
 const muiTheme = getMuiTheme();
 
 let SelectableList = makeSelectable(List);
-
-function wrapState(ComposedComponent) {
-  return class SelectableList extends Component {
-    static propTypes = {
-      children: PropTypes.node.isRequired,
-      defaultValue: PropTypes.number.isRequired,
-    };
-
-    componentWillMount() {
-      this.setState({
-        selectedIndex: this.props.defaultValue,
-      });
-    }
-
-    handleRequestChange = (event, index) => {
-      this.setState({
-        selectedIndex: index,
-      });
-    };
-
-    render() {
-      return (
-        <ComposedComponent
-          value={this.state.selectedIndex}
-          onChange={this.handleRequestChange}
-        >
-          {this.props.children}
-        </ComposedComponent>
-      );
-    }
-  };
-}
 
 SelectableList = wrapState(SelectableList);
 

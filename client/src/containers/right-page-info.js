@@ -13,7 +13,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-
 const muiTheme = getMuiTheme();
 
 const device = new Twilio.Device();
@@ -34,7 +33,10 @@ class RightPageInfo extends Component {
   }
   onFormSubmit(event) {
     event.preventDefault();
-
+    if (!this.state.notes) {
+      alert('Enter some notes!');
+      return;
+    }
       // store the notes into firebase under the active user
     const notesRef = firebase.database().ref('/notes');
     notesRef.child(this.props.activeUser).once('value', (snapshot) => {
