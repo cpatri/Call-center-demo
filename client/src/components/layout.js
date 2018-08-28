@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import ReduxPromise from 'redux-promise';
-import { createLogger } from 'redux-logger';
+// import { createLogger } from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from '../reducers';
 
@@ -15,8 +15,8 @@ import RightPageInfo from '../containers/right-page-info';
 window.React = React;
 window.ReactDOM = ReactDOM;
 
-const createStoreWithMiddleWare =
-applyMiddleware(ReduxThunk, ReduxPromise, createLogger())(createStore);
+const createStoreWithMiddleWare = applyMiddleware(ReduxThunk, ReduxPromise)(createStore);
+// applyMiddleware(ReduxThunk, ReduxPromise, createLogger())(createStore);
 
 export const store = createStoreWithMiddleWare(reducers);
 
@@ -78,7 +78,7 @@ class GoldenLayoutWrapper extends Component {
     };
     const { wrapperStyle } = styles;
     return (
-      <div id="golden-layout-wrapper" style={wrapperStyle} ref={input => (this.layout = input)} />
+      <div id="golden-layout-wrapper" style={wrapperStyle} ref={(input) => { this.layout = input; }} />
     );
   }
 }
