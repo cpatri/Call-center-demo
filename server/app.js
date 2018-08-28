@@ -114,7 +114,6 @@ app.post('/send', (req, res) => {
   }
 }) 
 
-
 // get messages from an actual phone number and send to call center
 app.post('/receive', (req, res)=> {
   
