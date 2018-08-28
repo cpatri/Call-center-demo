@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GoldenLayout from 'golden-layout';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import ReduxPromise from 'redux-promise';
 // import { createLogger } from 'redux-logger';
@@ -11,6 +11,7 @@ import reducers from '../reducers';
 import LeftPageList from '../containers/left-page-list';
 import MiddlePageChat from '../containers/middle-page-chat';
 import RightPageInfo from '../containers/right-page-info';
+import wrapComponent from './wrap-component';
 
 window.React = React;
 window.ReactDOM = ReactDOM;
@@ -19,19 +20,6 @@ const createStoreWithMiddleWare = applyMiddleware(ReduxThunk, ReduxPromise)(crea
 // applyMiddleware(ReduxThunk, ReduxPromise, createLogger())(createStore);
 
 export const store = createStoreWithMiddleWare(reducers);
-
-function wrapComponent(Component, store) {
-  class Wrapped extends React.Component {
-    render() {
-      return (
-        <Provider store={store}>
-          <Component {...this.props} />
-        </Provider>
-      );
-    }
-  }
-  return Wrapped;
-}
 
 class GoldenLayoutWrapper extends Component {
   componentDidMount() {
@@ -57,7 +45,6 @@ class GoldenLayoutWrapper extends Component {
         ],
       }],
     };
-
 
     const layout = new GoldenLayout(config, this.layout);
     layout.registerComponent('left-page-list', wrapComponent(LeftPageList, store));
