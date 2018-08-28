@@ -76,7 +76,7 @@ const messagesShape = {
 MiddlePageChat.propTypes = {
   center: PropTypes.shape({
     activeUser: PropTypes.string,
-    customerInfo: PropTypes.objectOf(PropTypes.string),
+    customerInfo: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)),
     lastMessages: PropTypes.objectOf(PropTypes.shape(messagesShape)),
     message: PropTypes.string,
     messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.shape(messagesShape))),

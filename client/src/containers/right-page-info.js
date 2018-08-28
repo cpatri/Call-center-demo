@@ -302,7 +302,7 @@ class RightPageInfo extends Component {
 }
 
 RightPageInfo.propTypes = {
-  customerInfo: PropTypes.objectOf(PropTypes.string),
+  customerInfo: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)),
   activeUser: PropTypes.string,
   notes: PropTypes.objectOf(PropTypes.shape({ notes: PropTypes.string })),
 };
