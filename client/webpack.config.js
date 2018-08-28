@@ -41,7 +41,7 @@ const config = {
       '/api': {
         target: 'http://localhost:3003',
         pathRewrite: {
-          '^/api' : '',
+          '^/api': '',
         },
       },
     },

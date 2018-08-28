@@ -59,7 +59,7 @@ class RightPageInfo extends Component {
 
   onDelete(event) {
     event.preventDefault();
-      // store the notes into firebase under the active user
+    // store the notes into firebase under the active user
     this.setState({ notes: '' });
     const notesRef = firebase.database().ref('/notes');
     notesRef.child(this.props.activeUser).once('value', (snapshot) => {
