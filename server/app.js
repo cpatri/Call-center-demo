@@ -5,15 +5,17 @@ const util = require('util');
 const bodyParser = require('body-parser');
 const path = require('path');
 const firebase = require('firebase');
+const basicAuth = require('express-basic-auth');
+const twilio = require('twilio');
+
+require('dotenv').load();
 
 var ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 var AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 var TWILIO_TWIML_APP_SID = process.env.TWILIO_TWIML_APP_SID;
+var ADMIN_USER = process.env.ADMIN_USER;
+var ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-
-require('dotenv').load();
-
-const twilio = require('twilio');
 const ClientCapability = twilio.jwt.ClientCapability;
 const MessagingResponse = twilio.twiml.MessagingResponse;
 const VoiceResponse = twilio.twiml.VoiceResponse;
@@ -35,6 +37,15 @@ firebase.initializeApp(config);
 
 //reference to database service
 var database = firebase.database();
+
+var challengeAuth = basicAuth({
+  authorizer: myAuthorizer,
+  challenge: true
+})
+
+function myAuthorizer(username, password) {
+  return username===ADMIN_USER && password===ADMIN_PASSWORD;
+}
 
 app.use(bodyParser.urlencoded({extended: false }));
 
@@ -58,7 +69,9 @@ app.use((req, res, next ) => {
     // Pass to next layer of middleware
     next();
 });
-app.use('/', express.static(path.join(__dirname, '../client/build')));
+
+app.use('/', challengeAuth, express.static(path.join(__dirname, '../client/build')));
+
 
 app.get('/api/', (req, res) => {
   console.log("Responding to root route");
