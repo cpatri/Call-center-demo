@@ -100,6 +100,8 @@ class RightPageInfo extends Component {
     device.on('cancel', () => {
       if (this.state.open) {
         this.setState({ open: false });
+      } else if (this.state.calling) {
+        this.setState({ calling: false });
       }
     });
     device.on('disconnect', () => {

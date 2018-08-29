@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const util = require('util');
 const bodyParser = require('body-parser');
+const path = require('path');
 const firebase = require('firebase');
 
 var ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
@@ -57,13 +58,14 @@ app.use((req, res, next ) => {
     // Pass to next layer of middleware
     next();
 });
+app.use('/', express.static(path.join(__dirname, '../client/build')));
 
-app.get('/', (req, res) => {
+app.get('/api/', (req, res) => {
   console.log("Responding to root route");
   res.send("Hello from ROOT");
 });
 
-app.post('/send', (req, res) => {
+app.post('/api/send', (req, res) => {
   let myNumber = process.env.TWILIO_CALLER_ID;
 
   client.messages.create({
@@ -115,7 +117,7 @@ app.post('/send', (req, res) => {
 }) 
 
 // get messages from an actual phone number and send to call center
-app.post('/receive', (req, res)=> {
+app.post('/api/receive', (req, res)=> {
   
   let incomingNum = req.body.From;
 
@@ -193,7 +195,7 @@ app.post('/receive', (req, res)=> {
 Generate a Capability Token for a Twilio Client user - it generates a random
 username for the client requesting a token.
 */
-app.get('/token', (req, res) => {
+app.get('/api/token', (req, res) => {
   const capability = new ClientCapability( {
     accountSid: process.env.TWILIO_ACCOUNT_SID,
     authToken: process.env.TWILIO_AUTH_TOKEN,
@@ -209,7 +211,7 @@ app.get('/token', (req, res) => {
   res.send(token);
 });
 
-app.post('/voice', function (req, res) {
+app.post('/api/voice', function (req, res) {
   console.log(req.body.To);
   const twiml  = new VoiceResponse();
   if (req.body.To) {
