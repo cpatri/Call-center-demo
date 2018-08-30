@@ -53,26 +53,8 @@ app.use(bodyParser.urlencoded({extended: false }));
 // parse application/json
 app.use(bodyParser.json())
 
-/*app.use((req, res, next ) => {
-      // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-}); */
-
-// Outgoing calls not working properly
-app.use('/', challengeAuth, express.static(path.join(__dirname, '../client/build')));
 
 
 app.get('/api/', (req, res) => {
@@ -238,6 +220,9 @@ app.post('/api/voice', function (req, res) {
   res.set('Content-Type', 'text/xml');
   res.send(twiml.toString());
 });
+
+// Outgoing calls not working properly
+app.use('/', challengeAuth, express.static(path.join(__dirname, '../client/build')));
 
 app.listen(3003, () => {
   console.log("Server is up and listening on 3003...")
