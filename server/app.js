@@ -47,15 +47,10 @@ function myAuthorizer(username, password) {
   return username===ADMIN_USER && password===ADMIN_PASSWORD;
 }
 
-
 app.use(bodyParser.urlencoded({extended: false }));
 
 // parse application/json
 app.use(bodyParser.json())
-
-
-
-
 
 app.get('/api/', (req, res) => {
   console.log("Responding to root route");
@@ -187,7 +182,6 @@ app.post('/api/receive', (req, res)=> {
   }
 });
 
-
 /*
 Generate a Capability Token for a Twilio Client user - it generates a random
 username for the client requesting a token.
@@ -221,7 +215,6 @@ app.post('/api/voice', function (req, res) {
   res.send(twiml.toString());
 });
 
-// Outgoing calls not working properly
 app.use('/', challengeAuth, express.static(path.join(__dirname, '../client/build')));
 
 app.listen(3003, () => {
