@@ -53,7 +53,7 @@ app.use(bodyParser.urlencoded({extended: false }));
 // parse application/json
 app.use(bodyParser.json())
 
-app.use((req, res, next ) => {
+/*app.use((req, res, next ) => {
       // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 
@@ -69,9 +69,10 @@ app.use((req, res, next ) => {
 
     // Pass to next layer of middleware
     next();
-});
+}); */
 
-app.use('^\/$', challengeAuth, express.static(path.join(__dirname, '../client/build')));
+// Outgoing calls not working properly
+app.use('/', challengeAuth, express.static(path.join(__dirname, '../client/build')));
 
 
 app.get('/api/', (req, res) => {
