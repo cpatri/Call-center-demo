@@ -47,6 +47,7 @@ function myAuthorizer(username, password) {
   return username===ADMIN_USER && password===ADMIN_PASSWORD;
 }
 
+
 app.use(bodyParser.urlencoded({extended: false }));
 
 // parse application/json
@@ -70,7 +71,7 @@ app.use((req, res, next ) => {
     next();
 });
 
-app.use('/', challengeAuth, express.static(path.join(__dirname, '../client/build')));
+app.use('^\/$', challengeAuth, express.static(path.join(__dirname, '../client/build')));
 
 
 app.get('/api/', (req, res) => {
@@ -225,7 +226,7 @@ app.get('/api/token', (req, res) => {
 });
 
 app.post('/api/voice', function (req, res) {
-  console.log(req.body.To);
+  console.log(req);
   const twiml  = new VoiceResponse();
   if (req.body.To) {
     const dial = twiml.dial({callerId: process.env.TWILIO_CALLER_ID});
