@@ -11,7 +11,11 @@ import Book from 'material-ui/svg-icons/action/book';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 import Avatar from 'material-ui/Avatar';
 import GoldenLayoutWrapper from './layout';
-
+/**
+ * NavBar is the navigation bar component
+ * It also returns the GoldenLayoutWrapper
+ * which contains the rest of the components for the project
+ */
 
 class NavBar extends Component {
   constructor(props) {

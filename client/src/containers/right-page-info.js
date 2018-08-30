@@ -16,7 +16,12 @@ import FlatButton from 'material-ui/FlatButton';
 const muiTheme = getMuiTheme();
 
 const device = new Twilio.Device();
-
+/**
+ * RightPageInfo contains the selected customer's public information given
+ * by Twilio Lookup's API
+ * and enables the employee to call the customer directly via Twilio Client.
+ * The employee can also take notes of the conversation with the textbox given
+ */
 class RightPageInfo extends Component {
   constructor(props) {
     super(props);

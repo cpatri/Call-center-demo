@@ -10,6 +10,7 @@ const twilio = require('twilio');
 
 require('dotenv').load();
 
+// Twilio Account information to config Twilio API calls
 var ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 var AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 var TWILIO_TWIML_APP_SID = process.env.TWILIO_TWIML_APP_SID;
@@ -24,7 +25,7 @@ const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 const app = express();
 
-// Initialize Firebase
+// Initialize Firebase 
 var config = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -38,6 +39,7 @@ firebase.initializeApp(config);
 //reference to database service
 var database = firebase.database();
 
+//Create Basic Auth to login into the UI
 var challengeAuth = basicAuth({
   authorizer: myAuthorizer,
   challenge: true
@@ -52,10 +54,32 @@ app.use(bodyParser.urlencoded({extended: false }));
 // parse application/json
 app.use(bodyParser.json())
 
+/**
+ * Webhooks for connected to Twilio API and Firebase 
+*/
+
+// test route
 app.get('/api/', (req, res) => {
   console.log("Responding to root route");
   res.send("Hello from ROOT");
 });
+
+/**
+ * post request to '/api/send' is made when the call center employee 
+ * sends a message to the customer through the input bar in the MiddlePageChat container.
+ * This webhook first sends the text message to the customer via Programmable SMS API
+ * and then stores the message into Firebase Realtime Database in the format:
+ * {
+ *  number: +1xxxxxxxxxx,
+ *  timestamp: xxxxxxxx,
+ *  message: 'xxxx'
+ * }
+ * where number is the Twilio number registered under the Call center employee
+ * It's first stored under a node called messages which contains a list of customer phone numbers. 
+ * The message is appended to the customer's phone number list of messages.
+ * The message is also appended to the lastMessages node which updates with this info under that 
+ * customer's phone number.
+ */
 
 app.post('/api/send', (req, res) => {
   let myNumber = process.env.TWILIO_CALLER_ID;
@@ -108,7 +132,15 @@ app.post('/api/send', (req, res) => {
   }
 }) 
 
-// get messages from an actual phone number and send to call center
+/**
+ * a post request to /api/receive is made when a customer sends a text message to the 
+ * call center employee's twilio phone number 
+ * 
+ * it stores the text message in the same format as above into the messages 
+ * and lastMessage node in Firebase and calls TwilioLookup API to look up info on the
+ * customer's number: name, country, state, city, and caller type
+ */
+
 app.post('/api/receive', (req, res)=> {
   
   let incomingNum = req.body.From;
@@ -182,10 +214,12 @@ app.post('/api/receive', (req, res)=> {
   }
 });
 
-/*
-Generate a Capability Token for a Twilio Client user - it generates a random
-username for the client requesting a token.
-*/
+/**
+ * Generate a Capability Token for a Twilio Client user 
+ * in order to make phone calls and listen for incoming calls
+ * it lasts for 1 hour
+ */
+
 app.get('/api/token', (req, res) => {
   const capability = new ClientCapability( {
     accountSid: process.env.TWILIO_ACCOUNT_SID,
@@ -202,6 +236,10 @@ app.get('/api/token', (req, res) => {
   res.send(token);
 });
 
+/**
+ * a post request to /api/voice is made when the call center employee is making 
+ * an outgoing call to a customer; uses twiml and Twilio's api
+ */
 app.post('/api/voice', function (req, res) {
   console.log(req);
   const twiml  = new VoiceResponse();
@@ -215,6 +253,7 @@ app.post('/api/voice', function (req, res) {
   res.send(twiml.toString());
 });
 
+//sets up the middleware for auth and serve a static file for the UI (client)
 app.use('/', challengeAuth, express.static(path.join(__dirname, '../client/build')));
 
 app.listen(3003, () => {

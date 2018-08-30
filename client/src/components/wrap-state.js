@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * the wrapState function is used to make the LeftPageList component
+ * highlight the activeUser's row when clicked on
+ */
+
 export default function wrapState(ComposedComponent) {
   return class SelectableList extends Component {
     static propTypes = {

@@ -10,6 +10,13 @@ import { selectUser } from '../actions/index';
 import { TWILIO_NUMBER } from '../config/index';
 import wrapState from '../components/wrap-state';
 
+/**
+ * LeftPageList is a container that shows the list of
+ * customers that contacted the call center employee.
+ * Clicking a customer enables the employee to chat and call
+ * that customer and take notes
+ */
+
 const muiTheme = getMuiTheme();
 
 let SelectableList = makeSelectable(List);

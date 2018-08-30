@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessages } from '../actions';
 
+/**
+ * the InputBar component is called within the MiddlePageChat container
+ * and it enables the call center use to type and send a message to a customer
+ */
 
 class InputBar extends Component {
   constructor(props) {

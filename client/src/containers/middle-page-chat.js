@@ -6,10 +6,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Paper from 'material-ui/Paper';
 import InputBar from '../components/input-bar';
-import { selectUser } from '../actions';
+
 import { TWILIO_NUMBER } from '../config/index';
 
 const muiTheme = getMuiTheme();
+
+/**
+ * MiddlePageChat is the container showing the chat conversation
+ * the employee had with the customer. The employee can send messages
+ * to the customer via the InputBar
+ */
 
 class MiddlePageChat extends Component {
   componentDidUpdate() {
@@ -142,4 +148,4 @@ const styles = {
   },
 };
 
-export default connect(mapStateToProps, { selectUser })(MiddlePageChat);
+export default connect(mapStateToProps)(MiddlePageChat);

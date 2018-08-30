@@ -7,10 +7,18 @@ export const UPDATE_MESSAGE_LIST = 'UPDATE_MESSAGE_LIST';
 export const SET_ACTIVE_USER = 'SET_ACTIVE_USER';
 export const SET_CUSTOMER_INFO = 'SET_CUSTOMER_INFO';
 export const UPDATE_NOTES = 'UPDATE_NOTES';
+/**
+ * Action Creators:
+ *    selectUser: selects the activeUser for the menu list on the left
+ *    sendMessages: called when an sms message is sent, it updates the Firebase store
+ *    updateLastMessage: update the most recent message for each customer
+ *    setActiveUser: sets who the active user/customer based on who's selected
+ *    setCustomerInfo: updates the customer's information when they contact the call center
+ *    the first time
+ *    updateNotes: updates the notes in Firebase when a note is appended to a customer's info
+ */
 
 export function selectUser(user) {
-  // selecUser is an action creator, needs to return an action
-  // an object with a type property
   return {
     type: USER_SELECTED,
     payload: user,
