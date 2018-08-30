@@ -1,0 +1,10 @@
+image: node:alpine
+
+install-deps:
+  stage: build
+  script:
+  - npm install
+  - npm run build
+  artifacts:
+    paths:
+    - build/
