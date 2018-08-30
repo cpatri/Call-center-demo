@@ -256,6 +256,6 @@ app.post('/api/voice', function (req, res) {
 //sets up the middleware for auth and serve a static file for the UI (client)
 app.use('/', challengeAuth, express.static(path.join(__dirname, '../client/build')));
 
-app.listen(3003, () => {
+app.listen(process.env.PORT || 3003, () => {
   console.log("Server is up and listening on 3003...")
 });
