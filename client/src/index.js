@@ -11,10 +11,6 @@ import '../styles/style.css';
 
 injectTapEventPlugin();
 
-
-// Override font of material ui to Open Sans
-// const fontFamily = "'Open Sans', sans-serif";
-// const muiTheme = getMuiTheme({ fontFamily });
 const muiTheme = getMuiTheme();
 
 // Router

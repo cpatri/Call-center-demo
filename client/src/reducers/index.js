@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-// import home from './home';
 import CenterReducer from './center';
 
 // how the redux state is being updated
