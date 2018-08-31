@@ -51,7 +51,7 @@ You'll need a Twilio phone number. You can pay or play Twilio Quest Getting Star
 In `.env` add in your Twilio credentials and twilio phone number. `TWILIO_TWIML_APP_SID` is set up in a later step.
 
 
-## 4. Set up credentials
+### 4. Set up credentials
 In `.env` set up your username and password for the project. 
 
 ### 5. Install ngrok (if necessary)
