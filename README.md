@@ -1,4 +1,4 @@
-#Call Center Demo
+# Call Center Demo
 
 This call center dashboard demo was designed and developed during my front-end engineering internship with Impekable from July to August 2018.
 
