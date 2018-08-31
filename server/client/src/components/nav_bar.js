@@ -45,7 +45,7 @@ class NavBar extends Component {
           }
           iconElementRight={
             <Avatar
-              src="https://avatars2.githubusercontent.com/u/19522672?s=460&v=4"
+              src={'https://api.adorable.io/avatars/255/123@adorable.png'}
               size={45}
             />
           }
