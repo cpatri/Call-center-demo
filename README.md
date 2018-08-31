@@ -82,4 +82,4 @@ Under 'Manage Numbers' in the Twilio console, click on 'Tools' and create a TwiM
 
 Take the SID from that TwiML app and put in your .env file under `TWILIO_TWIML_APP_SID`. 
 
-Now your project should be working. 
+Now your project should be working. Send a text message from your personal phone number to your assigned Twilio number to see the dashboard!

@@ -55,7 +55,7 @@ app.use(bodyParser.urlencoded({extended: false }));
 app.use(bodyParser.json())
 
 /**
- * Webhooks for connected to Twilio API and Firebase 
+ * Webhooks for connecting to Twilio API and Firebase 
 */
 
 // test route
